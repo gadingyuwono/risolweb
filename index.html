@@ -671,18 +671,18 @@
             const total = s * price.sayur + m * price.mayo;
 
             const note = encodeURIComponent(`Halo Risolweb! Saya mau pesan:
-            - Risol Sayur: ${s} pcs
-            - Risol Mayo: ${m} pcs
-            Total: Rp${total.toLocaleString()}
+- Risol Sayur: ${s} pcs
+- Risol Mayo: ${m} pcs
+Total: Rp${total.toLocaleString()}
 
-            Data Pemesan:
-            - Nama: ${name}
-            - Alamat: ${address}
-            - Tanggal Booking: ${date}
-            - Opsi: ${pickup}
-            - Lokasi Pertemuan: ${meeting}
+Data Pemesan:
+- Nama: ${name}
+- Alamat: ${address}
+- Tanggal Booking: ${date}
+- Opsi: ${pickup}
+- Lokasi Pertemuan: ${meeting}
 
-            Mohon konfirmasi & instruksi pembayaran. Terima kasih 🙏`);
+Mohon konfirmasi & instruksi pembayaran. Terima kasih!`);
 
             const url = `https://wa.me/${phone}?text=${note}`;
             window.open(url, '_blank');
@@ -692,3 +692,4 @@
 </body>
 
 </html>
+
