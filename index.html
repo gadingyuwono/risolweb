@@ -134,7 +134,7 @@
         .mobile-menu.open {
             /* limit to viewport height to avoid pushing layout too far */
             max-height: 80vh;
-            padding-bottom: 15px;
+            padding-bottom: 20px;
             overflow-y: auto;
         }
 
@@ -351,18 +351,59 @@
             </div>
 
             <!-- cart preview -->
-            <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4"
-                data-aos="fade-up" data-aos-delay="200">
-                <div class="card rounded-2xl p-4 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-                    <div class="flex-1 text-center sm:text-left">
+            <div class="mt-8 sm:mt-8 w-full max-w-6xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                <div class="card rounded-2xl p-6 w-full grid grid-cols-1 sm:grid-cols-4 gap-6 items-start">
+
+                    <!-- Total Items -->
+                    <div class="flex flex-col text-center sm:text-left">
                         <div class="text-sm text-[var(--muted)]">Total Item</div>
                         <div id="cart-count" class="text-2xl font-bold">0</div>
                     </div>
-                    <div class="flex-1 text-center sm:text-left">
+
+                    <!-- Subtotal -->
+                    <div class="flex flex-col text-center sm:text-left">
                         <div class="text-sm text-[var(--muted)]">Subtotal</div>
                         <div id="cart-sub" class="text-2xl font-bold">Rp0</div>
                     </div>
-                    <div class="flex-1 flex justify-center sm:justify-end">
+
+                    <!-- Form tambahan -->
+                    <div class="flex flex-col gap-3">
+                        <input type="text" id="customer-name" placeholder="Nama (wajib)" required
+                            class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[var(--blue)]">
+                        <input type="text" id="customer-address" placeholder="Alamat (opsional)"
+                            class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[var(--blue)]">
+                        <label for="meeting-location-option"
+                            class="text-sm text-[var(--muted)] font-medium mt-2">Tanggal pengiriman/pengambilan
+                            (opsional)</label>
+                        <input type="date" id="booking-date"
+                            class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[var(--blue)]">
+                        <!-- Opsi Pengambilan/Diantar -->
+                        <label for="pickup-option" class="text-sm text-[var(--muted)] font-medium">Pilihan
+                            pengambilan (opsional)</label>
+                        <select id="pickup-option"
+                            class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[var(--blue)]">
+                            <option value="ambil sendiri">Ambil sendiri</option>
+                            <option value="antar">Diantar</option>
+                        </select>
+
+                        <!-- Lokasi Pertemuan -->
+                        <label for="meeting-location-option" class="text-sm text-[var(--muted)] font-medium mt-2">Lokasi
+                            pertemuan (opsional)</label>
+                        <select id="meeting-location-option"
+                            class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[var(--blue)]">
+                            <option value="sekolah">Sekolah</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+
+                        <!-- Lokasi lain jika pilih Lainnya -->
+                        <label for="meeting-location-input" class="text-sm text-[var(--muted)] font-medium mt-2 hidden"
+                            id="meeting-location-label">Lokasi lain</label>
+                        <input type="text" id="meeting-location-input" placeholder="Lokasi lain (jika pilih Lainnya)"
+                            class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[var(--blue)] hidden">
+                    </div>
+
+                    <!-- Tombol WA -->
+                    <div class="flex justify-center sm:justify-end items-start">
                         <button id="cart-order" class="btn-order px-6 py-2 rounded-2xl w-full sm:w-40">
                             Pesan via WhatsApp
                         </button>
@@ -370,6 +411,8 @@
 
                 </div>
             </div>
+
+
         </section>
 
         <!-- Cara Order -->
@@ -529,7 +572,7 @@
             const s = items.sayur || 0;
             const m = items.mayo || 0;
             const total = s * price.sayur + m * price.mayo;
-            const note = encodeURIComponent(`Halo Risolweb! Saya mau pesan:\n- Risol Sayur: ${s} pcs\n- Risol Mayo: ${m} pcs\nTotal: Rp${total.toLocaleString()}\nMohon konfirmasi & instruksi pembayaran. Terima kasih!`);
+            const note = encodeURIComponent(`Halo Risolweb! Saya mau pesan:\n- Risol Sayur: ${s} pcs\n- Risol Mayo: ${m} pcs\nTotal: Rp${total.toLocaleString()}\nMohon konfirmasi & instruksi pembayaran. Terima kasih 🙏`);
             const url = `https://wa.me/${phone}?text=${note}`;
             window.open(url, '_blank');
         }
@@ -597,11 +640,55 @@
             return els;
         }
         // window.addEventListener('load', () => logOverflowingElements());
+
+        // Show/hide lokasi input jika pilih "Lainnya"
+        const meetingOption = document.getElementById('meeting-location-option');
+        const meetingInput = document.getElementById('meeting-location-input');
+
+        meetingOption.addEventListener('change', () => {
+            if (meetingOption.value === 'lainnya') {
+                meetingInput.classList.remove('hidden');
+            } else {
+                meetingInput.classList.add('hidden');
+                meetingInput.value = '';
+            }
+        });
+
+        // Modifikasi sendWhatsapp untuk include form data
+        function sendWhatsapp(items) {
+            const phone = '6288299607239';
+            const s = items.sayur || 0;
+            const m = items.mayo || 0;
+
+            // ambil data form
+            const name = document.getElementById('customer-name').value.trim();
+            if (!name) return alert('Nama wajib diisi 😊');
+            const address = document.getElementById('customer-address').value.trim() || '-';
+            const date = document.getElementById('booking-date').value || '-';
+            const pickup = document.getElementById('pickup-option').value;
+            const meeting = meetingOption.value === 'lainnya' ? (meetingInput.value || '-') : meetingOption.value;
+
+            const total = s * price.sayur + m * price.mayo;
+
+            const note = encodeURIComponent(`Halo Risolweb! Saya mau pesan:
+            - Risol Sayur: ${s} pcs
+            - Risol Mayo: ${m} pcs
+            Total: Rp${total.toLocaleString()}
+
+            Data Pemesan:
+            - Nama: ${name}
+            - Alamat: ${address}
+            - Tanggal Booking: ${date}
+            - Opsi: ${pickup}
+            - Lokasi Pertemuan: ${meeting}
+
+            Mohon konfirmasi & instruksi pembayaran. Terima kasih 🙏`);
+
+            const url = `https://wa.me/${phone}?text=${note}`;
+            window.open(url, '_blank');
+        }
+
     </script>
 </body>
 
 </html>
-
-
-
-
