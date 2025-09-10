@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Risolweb - Risol Modern</title>
+    <title>Risolweb — Risol Modern</title>
     <link rel="icon" href="risolweb_logo_2.png" type="image/png">
 
     <!-- Tailwind CDN (for quick prototyping) -->
@@ -76,7 +76,7 @@
 
         .btn-order-wa {
             /* WhatsApp green gradient button */
-            background: linear-gradient(90deg, #86dca6, #25D366);
+            background: linear-gradient(90deg, #25D366, #57ce83);
             color: white;
             box-shadow: 0 8px 24px rgba(18, 140, 126, 0.18);
             transition: transform .18s cubic-bezier(.2, .9, .3, 1), box-shadow .18s;
@@ -170,7 +170,7 @@
         <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
             <!-- Replace src with your uploaded logo filename -->
             <a href="#" class="flex items-center gap-3">
-                <img src="risolweb_logo.png" alt="Risolweb logo" class="h-12 w-auto" loading="lazy">
+                <img src="Risolweb_logo.png" alt="Risolweb logo" class="h-12 w-auto" loading="lazy">
             </a>
 
             <!-- Desktop nav -->
@@ -473,7 +473,22 @@
         function animatePulse(el) {
             gsap.fromTo(el, { scale: 0.96 }, { scale: 1, duration: 0.28, ease: 'elastic.out(1,0.6)' });
         }
-        
+
+        // lazy image fade-in for images with class lazy-img
+        const lazyImgs = document.querySelectorAll('.lazy-img');
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('loaded');
+                    e.target.style.opacity = 0;
+                    e.target.style.transform = 'translateY(10px)';
+                    gsap.to(e.target, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
+                    io.unobserve(e.target);
+                }
+            });
+        }, { rootMargin: '0px 0px -60px 0px', threshold: 0.15 });
+        lazyImgs.forEach(img => io.observe(img));
+
         // small entrance animation for hero float-up
         window.addEventListener('load', () => {
             document.querySelectorAll('.float-up').forEach(el => el.classList.add('loaded'));
@@ -500,7 +515,4 @@
     </script>
 </body>
 
-
 </html>
-
-
