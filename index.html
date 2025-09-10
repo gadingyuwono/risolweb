@@ -20,31 +20,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
+        /* === Defensive global layout fixes === */
         :root {
-            /* palette derived from your logo */
             --blue: #A8DDE6;
-            /* globe */
             --cream: #FFF7E6;
-            /* light cream */
             --peach: #F7D6A5;
-            /* risol light */
             --orange: #F4A261;
-            /* accent/button */
             --dark: #5C4033;
-            /* text deep brown */
             --muted: #9B8370;
-            /* secondary text */
             --glass: rgba(255, 255, 255, 0.7);
         }
 
-        html {
+        /* ensure consistent box sizing */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            /* Prevent horizontal scroll globally (defensive) */
+            overflow-x: hidden;
             scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            word-break: break-word;
+            /* avoid ultra-long words expanding viewport */
         }
 
         body {
             font-family: 'Quicksand', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
             background: linear-gradient(180deg, var(--cream), #fff);
             color: var(--dark);
+            -webkit-overflow-scrolling: touch;
         }
 
         /* header blur + glass */
@@ -52,6 +63,8 @@
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(6px);
             border-bottom: 1px solid rgba(92, 64, 51, 0.06);
+            left: 0;
+            right: 0;
         }
 
         /* Card look */
@@ -59,6 +72,8 @@
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98));
             border: 1px solid rgba(92, 64, 51, 0.06);
             box-shadow: 0 8px 20px rgba(92, 64, 51, 0.06);
+            overflow: hidden;
+            /* prevent children transforms from spilling out */
         }
 
         /* modern button */
@@ -75,7 +90,6 @@
         }
 
         .btn-order-wa {
-            /* WhatsApp green gradient button */
             background: linear-gradient(90deg, #86dca6, #25D366);
             color: white;
             box-shadow: 0 8px 24px rgba(18, 140, 126, 0.18);
@@ -106,15 +120,21 @@
             transition: transform .6s cubic-bezier(.2, .9, .3, 1);
         }
 
-        /* nav mobile */
+        /* nav mobile: use width:100 + box-sizing to avoid extra horizontal size due to padding */
         .mobile-menu {
             max-height: 0;
             overflow: hidden;
             transition: max-height .28s ease;
+            width: 100%;
+            left: 0;
+            right: 0;
+            box-sizing: border-box;
         }
 
         .mobile-menu.open {
-            max-height: 360px;
+            /* limit to viewport height to avoid pushing layout too far */
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         /* nice focus */
@@ -125,7 +145,6 @@
             outline-offset: 2px;
         }
 
-        /* small decorative */
         .accent-bar {
             height: 4px;
             background: linear-gradient(90deg, var(--blue), var(--peach));
@@ -134,11 +153,7 @@
             margin: .75rem auto 0;
         }
 
-        /* image smoothing */
         img {
-            image-rendering: auto;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             max-width: 100%;
             height: auto;
             display: block;
@@ -162,6 +177,12 @@
             100% {
                 background-position: 0% 50%;
             }
+        }
+
+        /* prevent long numbers/words to break layout */
+        #rekening {
+            word-break: break-all;
+            white-space: normal;
         }
 
         /* small-screen adjustments */
@@ -192,7 +213,6 @@
     <!-- Header -->
     <header class="fixed w-full z-50 nav-glass">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-            <!-- Replace src with your uploaded logo filename -->
             <a href="#" class="flex items-center gap-3">
                 <img src="risolweb_logo.png" alt="Risolweb logo" class="h-10 sm:h-12 w-auto" loading="lazy">
             </a>
@@ -204,15 +224,17 @@
                 <a class="nav-link transition-colors hover:text-[var(--orange)]" href="#bayar">Pembayaran</a>
                 <a class="nav-link transition-colors hover:text-[var(--orange)]" href="#kontak">Kontak</a>
                 <a id="nav-cta" href="#menu"
-                    class="ml-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg btn-order text-sm">Pesan Sekarang</a>
+                    class="ml-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg btn-order text-sm">Pesan
+                    Sekarang</a>
             </nav>
 
             <!-- Mobile hamburger -->
             <div class="md:hidden">
-                <button id="hambtn" aria-label="Buka menu" aria-expanded="false" class="p-2 rounded-md bg-white shadow-sm">
-                    <!-- menu icon -->
+                <button id="hambtn" aria-label="Buka menu" aria-expanded="false"
+                    class="p-2 rounded-md bg-white shadow-sm">
                     <svg id="hambsvg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path id="path1" d="M4 7h16M4 12h16M4 17h16" stroke="#5C4033" stroke-width="1.6" stroke-linecap="round" />
+                        <path id="path1" d="M4 7h16M4 12h16M4 17h16" stroke="#5C4033" stroke-width="1.6"
+                            stroke-linecap="round" />
                     </svg>
                 </button>
             </div>
@@ -232,25 +254,23 @@
     <!-- Hero -->
     <main class="pt-24">
         <section class="relative overflow-hidden">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20 flex flex-col lg:flex-row items-center gap-10">
+            <div
+                class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20 flex flex-col lg:flex-row items-center gap-10">
                 <!-- left -->
                 <div class="lg:w-1/2" data-aos="fade-right">
-                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight hero-title" style="color:var(--dark);">Risolweb — <span
-                            style="color:var(--orange)">Risol Modern</span></h1>
-                    <p class="mt-3 sm:mt-4 text-base sm:text-lg text-[var(--muted)] max-w-xl hero-sub">Risolweb menggabungkan cita rasa tradisional
-                        risol dengan pengalaman pemesanan modern. Pesan cepat via WhatsApp, bayar mudah lewat QRIS atau
-                        transfer.</p>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight hero-title"
+                        style="color:var(--dark);">Risolweb — <span style="color:var(--orange)">Risol Modern</span></h1>
+                    <p class="mt-3 sm:mt-4 text-base sm:text-lg text-[var(--muted)] max-w-xl hero-sub">Risolweb
+                        menggabungkan cita rasa tradisional risol dengan pengalaman pemesanan modern. Pesan cepat via
+                        WhatsApp, bayar mudah lewat QRIS atau transfer.</p>
 
                     <div class="mt-6 flex flex-wrap gap-3">
                         <a href="#menu"
-                            class="btn-order inline-flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-white text-sm shadow-lg">
-                            Pesan Sekarang
-                        </a>
-
+                            class="btn-order inline-flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-white text-sm shadow-lg">Pesan
+                            Sekarang</a>
                         <button id="scrollDemo"
-                            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white border shadow-sm text-sm">
-                            Lihat Cara Order
-                        </button>
+                            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white border shadow-sm text-sm">Lihat
+                            Cara Order</button>
                     </div>
 
                     <div class="mt-6 text-sm text-[var(--muted)]">
@@ -263,7 +283,6 @@
 
                 <!-- right (illustration) -->
                 <div class="lg:w-1/2 flex justify-center" data-aos="zoom-in">
-                    <!-- main risol + globe card -->
                     <div class="card rounded-3xl p-5 sm:p-6 w-full max-w-md transform transition-all hover:scale-105">
                         <div class="flex items-center gap-4 sm:gap-6">
                             <img src="risol.jpg" alt="Risol sample"
@@ -293,7 +312,8 @@
                 <article class="card rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center" data-aos="fade-up"
                     data-aos-delay="50">
                     <img src="risol_sayur.jpg" alt="Risol Sayur"
-                        class="h-36 sm:h-44 w-36 sm:w-44 object-cover rounded-xl shadow-lg mb-4 lazy-img" loading="lazy">
+                        class="h-36 sm:h-44 w-36 sm:w-44 object-cover rounded-xl shadow-lg mb-4 lazy-img"
+                        loading="lazy">
                     <h3 class="font-semibold text-lg sm:text-xl">Risol Sayur</h3>
                     <p class="text-[var(--muted)] mt-2">Kentang & wortel, gurih dan hangat.</p>
 
@@ -312,7 +332,8 @@
                 <article class="card rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center" data-aos="fade-up"
                     data-aos-delay="120">
                     <img src="risol_mayo.jpg" alt="Risol Mayo"
-                        class="h-36 sm:h-44 w-36 sm:w-44 object-cover rounded-xl shadow-lg mb-4 lazy-img" loading="lazy">
+                        class="h-36 sm:h-44 w-36 sm:w-44 object-cover rounded-xl shadow-lg mb-4 lazy-img"
+                        loading="lazy">
                     <h3 class="font-semibold text-lg sm:text-xl">Risol Mayo</h3>
                     <p class="text-[var(--muted)] mt-2">Mayonnaise creamy yang meleleh.</p>
 
@@ -329,7 +350,8 @@
             </div>
 
             <!-- cart preview -->
-            <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4"
+                data-aos="fade-up" data-aos-delay="200">
                 <div class="card rounded-2xl p-4 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
                     <div class="flex-1 text-center sm:text-left">
                         <div class="text-sm text-[var(--muted)]">Total Item</div>
@@ -339,9 +361,10 @@
                         <div class="text-sm text-[var(--muted)]">Subtotal</div>
                         <div id="cart-sub" class="text-2xl font-bold">Rp0</div>
                     </div>
-                    <div class="flex-1 flex justify-center sm:justify-end">
-                        <button id="cart-order" class="btn-order px-6 py-2 rounded-2xl w-full sm:w-auto">Pesan via WhatsApp</button>
+                    <div>
+                        <button id="cart-order" class="btn-order px-6 py-2 rounded-2xl">Pesan via WhatsApp</button>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -371,15 +394,17 @@
 
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="card rounded-2xl p-6 text-center flex flex-col justify-center" data-aos="fade-right">
-                    <h4 class="font-semibold">QRIS</h4> <!-- Replace src with your QRIS image -->
+                    <h4 class="font-semibold">QRIS</h4>
                     <p><strong><em class="text-red-600">UNTUK SEMENTARA QRIS BELUM ADA</em></strong></p>
                     <img src="sorry_emoji.jpg" alt="QRIS"
-                        class="mx-auto mt-4 rounded-lg w-28 h-28 sm:w-32 sm:h-32 object-contain lazy-img" loading="lazy">
+                        class="mx-auto mt-4 rounded-lg w-28 h-28 sm:w-32 sm:h-32 object-contain lazy-img"
+                        loading="lazy">
                     <p class="mt-4 text-[var(--muted)]">Scan untuk membayar langsung dari e-walletmu.</p>
                 </div>
 
                 <!-- Transfer Bank Card -->
-                <div role="button" tabindex="0" class="card rounded-2xl p-6 text-center flex flex-col justify-center bca-gradient text-white shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300"
+                <div role="button" tabindex="0"
+                    class="card rounded-2xl p-6 text-center flex flex-col justify-center bca-gradient text-white shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300"
                     data-aos="fade-left" onclick="copyRekening()" onkeypress="if(event.key==='Enter') copyRekening()">
                     <h4 class="font-semibold">Transfer Bank</h4>
                     <img src="bca_logo.png" alt="BCA"
@@ -432,11 +457,9 @@
 
         function setMenuIcon(open) {
             if (open) {
-                // X icon
                 path1.setAttribute('d', 'M6 6L18 18M6 18L18 6');
                 path1.setAttribute('stroke-linecap', 'round');
             } else {
-                // Hamburger
                 path1.setAttribute('d', 'M4 7h16M4 12h16M4 17h16');
             }
         }
@@ -499,7 +522,6 @@
         });
 
         function sendWhatsapp(items) {
-            // Customize admin number here (no +). e.g. 6281234567890
             const phone = '6288299607239';
             const s = items.sayur || 0;
             const m = items.mayo || 0;
@@ -519,7 +541,6 @@
         // small entrance animation for hero float-up
         window.addEventListener('load', () => {
             document.querySelectorAll('.float-up').forEach(el => el.classList.add('loaded'));
-            // gentle hero image pop
             if (window.gsap) {
                 gsap.from('header img', { y: -8, opacity: 0, duration: .8, ease: 'power2.out' });
             }
@@ -546,7 +567,6 @@
                     setTimeout(() => { toast.style.opacity = "0"; }, 2000);
                 });
             } else {
-                // fallback
                 const ta = document.createElement('textarea');
                 ta.value = rekening;
                 ta.style.position = 'fixed';
@@ -560,6 +580,21 @@
                 setTimeout(() => { toast.style.opacity = "0"; }, 2000);
             }
         }
+
+        // Optional: log elements that are wider than viewport for debugging
+        // (jalankan di console jika masih ada horizontal scroll)
+        function logOverflowingElements() {
+            const vw = document.documentElement.clientWidth;
+            const els = [...document.querySelectorAll('*')].filter(el => el.scrollWidth > vw + 1);
+            if (els.length) {
+                console.warn('Elemen overflow (lebih lebar dari viewport):', vw, els);
+            } else {
+                console.info('Tidak ada elemen yang overflow melewati viewport.');
+            }
+            return els;
+        }
+        // window.addEventListener('load', () => logOverflowingElements());
     </script>
 </body>
+
 </html>
