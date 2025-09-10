@@ -473,22 +473,7 @@
         function animatePulse(el) {
             gsap.fromTo(el, { scale: 0.96 }, { scale: 1, duration: 0.28, ease: 'elastic.out(1,0.6)' });
         }
-
-        // lazy image fade-in for images with class lazy-img
-        const lazyImgs = document.querySelectorAll('.lazy-img');
-        const io = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.classList.add('loaded');
-                    e.target.style.opacity = 0;
-                    e.target.style.transform = 'translateY(10px)';
-                    gsap.to(e.target, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
-                    io.unobserve(e.target);
-                }
-            });
-        }, { rootMargin: '0px 0px -60px 0px', threshold: 0.15 });
-        lazyImgs.forEach(img => io.observe(img));
-
+        
         // small entrance animation for hero float-up
         window.addEventListener('load', () => {
             document.querySelectorAll('.float-up').forEach(el => el.classList.add('loaded'));
@@ -517,3 +502,4 @@
 
 
 </html>
+
