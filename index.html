@@ -49,14 +49,14 @@
 
         /* header blur + glass */
         .nav-glass {
-            background: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(6px);
             border-bottom: 1px solid rgba(92, 64, 51, 0.06);
         }
 
         /* Card look */
         .card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.9));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98));
             border: 1px solid rgba(92, 64, 51, 0.06);
             box-shadow: 0 8px 20px rgba(92, 64, 51, 0.06);
         }
@@ -114,7 +114,7 @@
         }
 
         .mobile-menu.open {
-            max-height: 240px;
+            max-height: 360px;
         }
 
         /* nice focus */
@@ -139,6 +139,9 @@
             image-rendering: auto;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            max-width: 100%;
+            height: auto;
+            display: block;
         }
 
         .bca-gradient {
@@ -160,6 +163,27 @@
                 background-position: 0% 50%;
             }
         }
+
+        /* small-screen adjustments */
+        @media (max-width: 420px) {
+            .hero-title {
+                font-size: 1.6rem;
+                line-height: 1.15;
+            }
+
+            .hero-sub {
+                font-size: 0.95rem;
+            }
+
+            header .max-w-6xl {
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+
+            .qty input {
+                width: 44px;
+            }
+        }
     </style>
 </head>
 
@@ -167,39 +191,40 @@
 
     <!-- Header -->
     <header class="fixed w-full z-50 nav-glass">
-        <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
             <!-- Replace src with your uploaded logo filename -->
             <a href="#" class="flex items-center gap-3">
-                <img src="risolweb_logo.png" alt="Risolweb logo" class="h-12 w-auto" loading="lazy">
+                <img src="risolweb_logo.png" alt="Risolweb logo" class="h-10 sm:h-12 w-auto" loading="lazy">
             </a>
 
             <!-- Desktop nav -->
             <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
-                <a class="nav-link transition-colors hover:text-var(--orange)" href="#menu">Menu</a>
-                <a class="nav-link transition-colors hover:text-var(--orange)" href="#cara">Cara Order</a>
-                <a class="nav-link transition-colors hover:text-var(--orange)" href="#bayar">Pembayaran</a>
-                <a class="nav-link transition-colors hover:text-var(--orange)" href="#kontak">Kontak</a>
+                <a class="nav-link transition-colors hover:text-[var(--orange)]" href="#menu">Menu</a>
+                <a class="nav-link transition-colors hover:text-[var(--orange)]" href="#cara">Cara Order</a>
+                <a class="nav-link transition-colors hover:text-[var(--orange)]" href="#bayar">Pembayaran</a>
+                <a class="nav-link transition-colors hover:text-[var(--orange)]" href="#kontak">Kontak</a>
                 <a id="nav-cta" href="#menu"
-                    class="ml-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg btn-order">Pesan Sekarang</a>
+                    class="ml-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg btn-order text-sm">Pesan Sekarang</a>
             </nav>
 
             <!-- Mobile hamburger -->
             <div class="md:hidden">
-                <button id="hambtn" aria-label="Buka menu" class="p-2 rounded-md bg-white shadow-sm">
-                    <svg id="hambsvg" width="22" height="22" viewBox="0 0 24 24" fill="none">
-                        <path d="M4 7h16M4 12h16M4 17h16" stroke="#5C4033" stroke-width="1.6" stroke-linecap="round" />
+                <button id="hambtn" aria-label="Buka menu" aria-expanded="false" class="p-2 rounded-md bg-white shadow-sm">
+                    <!-- menu icon -->
+                    <svg id="hambsvg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path id="path1" d="M4 7h16M4 12h16M4 17h16" stroke="#5C4033" stroke-width="1.6" stroke-linecap="round" />
                     </svg>
                 </button>
             </div>
         </div>
 
         <!-- Mobile menu -->
-        <div id="mobileMenu" class="mobile-menu md:hidden px-6 pb-4 bg-white/90">
-            <div class="flex flex-col gap-3 pt-2">
-                <a href="#menu" class="py-2 border-b">Menu</a>
-                <a href="#cara" class="py-2 border-b">Cara Order</a>
-                <a href="#bayar" class="py-2 border-b">Pembayaran</a>
-                <a href="#kontak" class="py-2">Kontak</a>
+        <div id="mobileMenu" class="mobile-menu md:hidden px-4 sm:px-6 pb-4 bg-white/90">
+            <div class="flex flex-col gap-2 pt-2">
+                <a href="#menu" class="py-3 px-2 rounded hover:bg-gray-50">Menu</a>
+                <a href="#cara" class="py-3 px-2 rounded hover:bg-gray-50">Cara Order</a>
+                <a href="#bayar" class="py-3 px-2 rounded hover:bg-gray-50">Pembayaran</a>
+                <a href="#kontak" class="py-3 px-2 rounded hover:bg-gray-50">Kontak</a>
             </div>
         </div>
     </header>
@@ -207,29 +232,28 @@
     <!-- Hero -->
     <main class="pt-24">
         <section class="relative overflow-hidden">
-            <div class="max-w-6xl mx-auto px-6 py-16 lg:py-20 flex flex-col lg:flex-row items-center gap-12">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20 flex flex-col lg:flex-row items-center gap-10">
                 <!-- left -->
                 <div class="lg:w-1/2" data-aos="fade-right">
-                    <h1 class="text-4xl lg:text-5xl font-bold leading-tight" style="color:var(--dark);">Risolweb — <span
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight hero-title" style="color:var(--dark);">Risolweb — <span
                             style="color:var(--orange)">Risol Modern</span></h1>
-                    <p class="mt-4 text-lg text-[var(--muted)] max-w-xl">Risolweb menggabungkan cita rasa tradisional
+                    <p class="mt-3 sm:mt-4 text-base sm:text-lg text-[var(--muted)] max-w-xl hero-sub">Risolweb menggabungkan cita rasa tradisional
                         risol dengan pengalaman pemesanan modern. Pesan cepat via WhatsApp, bayar mudah lewat QRIS atau
                         transfer.</p>
 
-                    <div class="mt-6 flex flex-wrap gap-4">
+                    <div class="mt-6 flex flex-wrap gap-3">
                         <a href="#menu"
-                            class="btn-order inline-flex items-center gap-3 px-5 py-3 rounded-2xl text-white text-sm shadow-lg">
-                            <!-- cart icon -->
+                            class="btn-order inline-flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-white text-sm shadow-lg">
                             Pesan Sekarang
                         </a>
 
                         <button id="scrollDemo"
-                            class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white border shadow-sm">
+                            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white border shadow-sm text-sm">
                             Lihat Cara Order
                         </button>
                     </div>
 
-                    <div class="mt-8 text-sm text-[var(--muted)]">
+                    <div class="mt-6 text-sm text-[var(--muted)]">
                         <div class="flex items-center gap-3">
                             <div class="w-3 h-3 rounded-full" style="background:var(--blue)"></div>
                             <span>Higienis • Kemasan Mika • Pengiriman Cepat</span>
@@ -240,12 +264,12 @@
                 <!-- right (illustration) -->
                 <div class="lg:w-1/2 flex justify-center" data-aos="zoom-in">
                     <!-- main risol + globe card -->
-                    <div class="card rounded-3xl p-6 w-full max-w-md transform transition-all hover:scale-102">
-                        <div class="flex items-center gap-6">
+                    <div class="card rounded-3xl p-5 sm:p-6 w-full max-w-md transform transition-all hover:scale-105">
+                        <div class="flex items-center gap-4 sm:gap-6">
                             <img src="risol.jpg" alt="Risol sample"
-                                class="h-36 rounded-xl shadow-md object-cover float-up" loading="lazy">
+                                class="h-32 sm:h-36 rounded-xl shadow-md object-cover float-up" loading="lazy">
                             <div>
-                                <h3 class="text-xl font-semibold">Risol Sayur & Mayo</h3>
+                                <h3 class="text-lg sm:text-xl font-semibold">Risol Sayur & Mayo</h3>
                                 <p class="text-sm text-[var(--muted)] mt-1">Beli risol sekarang bisa lewat website loh!
                                 </p>
                                 <div class="accent-bar"></div>
@@ -257,47 +281,47 @@
         </section>
 
         <!-- Menu -->
-        <section id="menu" class="max-w-6xl mx-auto px-6 py-20">
-            <div class="text-center mb-12" data-aos="fade-up">
-                <h2 class="text-3xl font-bold" style="color:var(--dark)">Menu</h2>
+        <section id="menu" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+            <div class="text-center mb-8 sm:mb-12" data-aos="fade-up">
+                <h2 class="text-2xl sm:text-3xl font-bold" style="color:var(--dark)">Menu</h2>
                 <p class="mt-2 text-[var(--muted)] max-w-2xl mx-auto">Pilih varian, atur jumlah, lalu klik Pesan via
                     WhatsApp — otomatis terisi format pemesanan.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                 <!-- Card Sayur -->
-                <article class="card rounded-2xl p-6 flex flex-col items-center text-center" data-aos="fade-up"
+                <article class="card rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center" data-aos="fade-up"
                     data-aos-delay="50">
                     <img src="risol_sayur.jpg" alt="Risol Sayur"
-                        class="h-44 w-44 object-cover rounded-xl shadow-lg mb-4 lazy-img" loading="lazy">
-                    <h3 class="font-semibold text-xl">Risol Sayur</h3>
+                        class="h-36 sm:h-44 w-36 sm:w-44 object-cover rounded-xl shadow-lg mb-4 lazy-img" loading="lazy">
+                    <h3 class="font-semibold text-lg sm:text-xl">Risol Sayur</h3>
                     <p class="text-[var(--muted)] mt-2">Kentang & wortel, gurih dan hangat.</p>
 
                     <div class="mt-4 flex items-center gap-3">
                         <div class="qty inline-flex items-center px-2 py-1">
-                            <button class="dec text-lg px-2" data-for="sayur">−</button>
-                            <input class="mx-1 w-12 text-center bg-transparent border-none" id="input-sayur"
+                            <button class="dec text-lg px-2" data-for="sayur" aria-label="Kurangi">−</button>
+                            <input class="mx-1 w-12 sm:w-16 text-center bg-transparent border-none" id="input-sayur"
                                 type="number" min="0" value="0" aria-label="Jumlah Risol Sayur" />
-                            <button class="inc text-lg px-2" data-for="sayur">+</button>
+                            <button class="inc text-lg px-2" data-for="sayur" aria-label="Tambah">+</button>
                         </div>
                         <div class="text-lg font-bold text-[var(--orange)]">Rp2.000</div>
                     </div>
                 </article>
 
                 <!-- Card Mayo -->
-                <article class="card rounded-2xl p-6 flex flex-col items-center text-center" data-aos="fade-up"
+                <article class="card rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center" data-aos="fade-up"
                     data-aos-delay="120">
                     <img src="risol_mayo.jpg" alt="Risol Mayo"
-                        class="h-44 w-44 object-cover rounded-xl shadow-lg mb-4 lazy-img" loading="lazy">
-                    <h3 class="font-semibold text-xl">Risol Mayo</h3>
+                        class="h-36 sm:h-44 w-36 sm:w-44 object-cover rounded-xl shadow-lg mb-4 lazy-img" loading="lazy">
+                    <h3 class="font-semibold text-lg sm:text-xl">Risol Mayo</h3>
                     <p class="text-[var(--muted)] mt-2">Mayonnaise creamy yang meleleh.</p>
 
                     <div class="mt-4 flex items-center gap-3">
                         <div class="qty inline-flex items-center px-2 py-1">
-                            <button class="dec text-lg px-2" data-for="mayo">−</button>
-                            <input class="mx-1 w-12 text-center bg-transparent border-none" id="input-mayo"
+                            <button class="dec text-lg px-2" data-for="mayo" aria-label="Kurangi">−</button>
+                            <input class="mx-1 w-12 sm:w-16 text-center bg-transparent border-none" id="input-mayo"
                                 type="number" min="0" value="0" aria-label="Jumlah Risol Mayo" />
-                            <button class="inc text-lg px-2" data-for="mayo">+</button>
+                            <button class="inc text-lg px-2" data-for="mayo" aria-label="Tambah">+</button>
                         </div>
                         <div class="text-lg font-bold text-[var(--orange)]">Rp3.000</div>
                     </div>
@@ -305,29 +329,29 @@
             </div>
 
             <!-- cart preview -->
-            <div class="mt-10 flex justify-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="card rounded-2xl p-4 flex items-center gap-4">
-                    <div>
+            <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card rounded-2xl p-4 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                    <div class="flex-1 text-center sm:text-left">
                         <div class="text-sm text-[var(--muted)]">Total Item</div>
                         <div id="cart-count" class="text-2xl font-bold">0</div>
                     </div>
-                    <div>
+                    <div class="flex-1 text-center sm:text-left">
                         <div class="text-sm text-[var(--muted)]">Subtotal</div>
                         <div id="cart-sub" class="text-2xl font-bold">Rp0</div>
                     </div>
-                    <div>
-                        <button id="cart-order" class="btn-order px-6 py-2 rounded-2xl">Pesan via WhatsApp</button>
+                    <div class="flex-1 flex justify-center sm:justify-end">
+                        <button id="cart-order" class="btn-order px-6 py-2 rounded-2xl w-full sm:w-auto">Pesan via WhatsApp</button>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Cara Order -->
-        <section id="cara" class="bg-[#FFF9F4] py-16">
-            <div class="max-w-4xl mx-auto px-6 text-center" data-aos="fade-up">
-                <h3 class="text-2xl font-bold" style="color:var(--dark)">Cara Order</h3>
-                <p class="mt-4 text-[var(--muted)]">Panduan singkat agar pemesanan mudah & cepat.</p>
-                <ol class="mt-6 text-left mx-auto max-w-xl space-y-3 text-[var(--muted)]">
+        <section id="cara" class="bg-[#FFF9F4] py-12 sm:py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center" data-aos="fade-up">
+                <h3 class="text-xl sm:text-2xl font-bold" style="color:var(--dark)">Cara Order</h3>
+                <p class="mt-3 sm:mt-4 text-[var(--muted)]">Panduan singkat agar pemesanan mudah & cepat.</p>
+                <ol class="mt-6 text-left mx-auto max-w-xl space-y-2 sm:space-y-3 text-[var(--muted)]">
                     <li>1. Pilih varian risol sesuai selera.</li>
                     <li>2. Tentukan jumlah pesanan.</li>
                     <li>3. Klik <b>Pesan via WhatsApp</b> untuk mengirim ringkasan order.</li>
@@ -339,9 +363,9 @@
         </section>
 
         <!-- Pembayaran -->
-        <section id="bayar" class="max-w-4xl mx-auto px-6 py-16">
-            <div class="text-center mb-8" data-aos="fade-up">
-                <h3 class="text-2xl font-bold" style="color:var(--dark)">Metode Pembayaran</h3>
+        <section id="bayar" class="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+            <div class="text-center mb-6 sm:mb-8" data-aos="fade-up">
+                <h3 class="text-xl sm:text-2xl font-bold" style="color:var(--dark)">Metode Pembayaran</h3>
                 <p class="mt-2 text-[var(--muted)]">Pilih metode yang memudahkanmu.</p>
             </div>
 
@@ -350,13 +374,13 @@
                     <h4 class="font-semibold">QRIS</h4> <!-- Replace src with your QRIS image -->
                     <p><strong><em class="text-red-600">UNTUK SEMENTARA QRIS BELUM ADA</em></strong></p>
                     <img src="sorry_emoji.jpg" alt="QRIS"
-                        class="mx-auto mt-4 rounded-lg w-32 h-32 object-contain lazy-img" loading="lazy">
+                        class="mx-auto mt-4 rounded-lg w-28 h-28 sm:w-32 sm:h-32 object-contain lazy-img" loading="lazy">
                     <p class="mt-4 text-[var(--muted)]">Scan untuk membayar langsung dari e-walletmu.</p>
                 </div>
 
                 <!-- Transfer Bank Card -->
-                <div class="card rounded-2xl p-6 text-center flex flex-col justify-center bca-gradient text-white shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300"
-                    data-aos="fade-left" onclick="copyRekening()">
+                <div role="button" tabindex="0" class="card rounded-2xl p-6 text-center flex flex-col justify-center bca-gradient text-white shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300"
+                    data-aos="fade-left" onclick="copyRekening()" onkeypress="if(event.key==='Enter') copyRekening()">
                     <h4 class="font-semibold">Transfer Bank</h4>
                     <img src="bca_logo.png" alt="BCA"
                         class="mx-auto mt-4 rounded-lg w-auto h-10 object-contain lazy-img" loading="lazy">
@@ -378,12 +402,12 @@
         </section>
 
         <!-- Contact -->
-        <section id="kontak" class="bg-[#fffaf7] py-16">
-            <div class="max-w-4xl mx-auto px-6 text-center" data-aos="fade-up">
-                <h3 class="text-2xl font-bold" style="color:var(--dark)">Kontak & Lokasi</h3>
+        <section id="kontak" class="bg-[#fffaf7] py-12 sm:py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center" data-aos="fade-up">
+                <h3 class="text-xl sm:text-2xl font-bold" style="color:var(--dark)">Kontak & Lokasi</h3>
                 <p class="mt-3 text-[var(--muted)]">Untuk pemesanan dan pertanyaan, hubungi kami melalui WhatsApp.</p>
                 <a id="wa-contact" href="https://wa.me/6288299607239" target="_blank"
-                    class="btn-order-wa inline-flex items-center gap-3 mt-5 px-6 py-3 rounded-2xl text-white"> Chat
+                    class="btn-order-wa inline-flex items-center gap-3 mt-5 px-5 py-3 rounded-2xl text-white"> Chat
                     WhatsApp </a>
                 <p class="mt-4 text-sm text-[var(--muted)]">Lokasi: SMK Hang Tuah 1 Jakarta / Warakas, Tanjung Priok.
                 </p>
@@ -400,11 +424,27 @@
     <script>
         AOS.init({ duration: 750, once: true, offset: 120 });
 
-        // Mobile menu toggle
+        // Mobile menu toggle (with accessible aria-expanded + icon swap)
         const hambtn = document.getElementById('hambtn');
         const mobileMenu = document.getElementById('mobileMenu');
+        const hambsvg = document.getElementById('hambsvg');
+        const path1 = document.getElementById('path1');
+
+        function setMenuIcon(open) {
+            if (open) {
+                // X icon
+                path1.setAttribute('d', 'M6 6L18 18M6 18L18 6');
+                path1.setAttribute('stroke-linecap', 'round');
+            } else {
+                // Hamburger
+                path1.setAttribute('d', 'M4 7h16M4 12h16M4 17h16');
+            }
+        }
+
         hambtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
+            const isOpen = mobileMenu.classList.toggle('open');
+            hambtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            setMenuIcon(isOpen);
         });
 
         // Smooth scroll demo button
@@ -422,8 +462,8 @@
         const price = { sayur: 2000, mayo: 3000 };
 
         function updateCart() {
-            const s = parseInt(inputSayur.value) || 0;
-            const m = parseInt(inputMayo.value) || 0;
+            const s = Math.max(0, parseInt(inputSayur.value) || 0);
+            const m = Math.max(0, parseInt(inputMayo.value) || 0);
             const totalItems = s + m;
             const sub = s * price.sayur + m * price.mayo;
             cartCount.innerText = totalItems;
@@ -471,19 +511,27 @@
 
         // animate pulse small feedback
         function animatePulse(el) {
-            gsap.fromTo(el, { scale: 0.96 }, { scale: 1, duration: 0.28, ease: 'elastic.out(1,0.6)' });
+            if (window.gsap) {
+                gsap.fromTo(el, { scale: 0.96 }, { scale: 1, duration: 0.28, ease: 'elastic.out(1,0.6)' });
+            }
         }
 
         // small entrance animation for hero float-up
         window.addEventListener('load', () => {
             document.querySelectorAll('.float-up').forEach(el => el.classList.add('loaded'));
             // gentle hero image pop
-            gsap.from('header img', { y: -8, opacity: 0, duration: .8, ease: 'power2.out' });
+            if (window.gsap) {
+                gsap.from('header img', { y: -8, opacity: 0, duration: .8, ease: 'power2.out' });
+            }
         });
 
-        // update cart on manual input change
+        // update cart on manual input change (debounced)
         [inputSayur, inputMayo].forEach(inp => {
-            inp.addEventListener('input', () => updateCart());
+            let t;
+            inp.addEventListener('input', () => {
+                clearTimeout(t);
+                t = setTimeout(updateCart, 120);
+            });
         });
 
         // init
@@ -491,13 +539,27 @@
 
         function copyRekening() {
             const rekening = document.getElementById("rekening").innerText;
-            navigator.clipboard.writeText(rekening).then(() => {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(rekening).then(() => {
+                    const toast = document.getElementById("toast");
+                    toast.style.opacity = "1";
+                    setTimeout(() => { toast.style.opacity = "0"; }, 2000);
+                });
+            } else {
+                // fallback
+                const ta = document.createElement('textarea');
+                ta.value = rekening;
+                ta.style.position = 'fixed';
+                ta.style.left = '-9999px';
+                document.body.appendChild(ta);
+                ta.select();
+                try { document.execCommand('copy'); } catch (e) { /* ignore */ }
+                document.body.removeChild(ta);
                 const toast = document.getElementById("toast");
                 toast.style.opacity = "1";
                 setTimeout(() => { toast.style.opacity = "0"; }, 2000);
-            });
+            }
         }
     </script>
 </body>
-
 </html>
