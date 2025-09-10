@@ -529,7 +529,7 @@
             const s = items.sayur || 0;
             const m = items.mayo || 0;
             const total = s * price.sayur + m * price.mayo;
-            const note = encodeURIComponent(`Halo Risolweb! Saya mau pesan:\n- Risol Sayur: ${s} pcs\n- Risol Mayo: ${m} pcs\nTotal: Rp${total.toLocaleString()}\nMohon konfirmasi & instruksi pembayaran. Terima kasih 🙏`);
+            const note = encodeURIComponent(`Halo Risolweb! Saya mau pesan:\n- Risol Sayur: ${s} pcs\n- Risol Mayo: ${m} pcs\nTotal: Rp${total.toLocaleString()}\nMohon konfirmasi & instruksi pembayaran. Terima kasih!`);
             const url = `https://wa.me/${phone}?text=${note}`;
             window.open(url, '_blank');
         }
@@ -601,5 +601,6 @@
 </body>
 
 </html>
+
 
 
