@@ -55,4 +55,4 @@ Proyek ini di-host di GitHub Pages. Untuk informasi lisensi lebih lanjut, lihat 
 **Dibuat oleh**: Gading Yuwono  
 **Terakhir diperbarui**: 2025
 
-#MadeByGading with ❤️
+_#MadeByGading with ❤️_
