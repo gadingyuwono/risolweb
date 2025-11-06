@@ -52,7 +52,9 @@ Untuk kontribusi atau pertanyaan, silakan hubungi pemilik repository atau buat i
 
 Proyek ini di-host di GitHub Pages. Untuk informasi lisensi lebih lanjut, lihat repository GitHub resmi.
 
----
+##
 
 **Dibuat oleh**: Gading Yuwono  
 **Terakhir diperbarui**: 2025
+
+#MadeByGading with ❤️
