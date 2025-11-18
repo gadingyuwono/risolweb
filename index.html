@@ -1,699 +1,286 @@
 <!DOCTYPE html>
 <html lang="id">
-
-<head>
+  <head>
+    <!-- Metadata dasar -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Risolweb - Risol Modern</title>
-    <link rel="icon" href="risolweb_logo_2.png" type="image/png">
+    <link rel="icon" href="./img/risolweb_logo_2.png" type="image/png" />
 
-    <!-- Tailwind CDN (for quick prototyping) -->
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- AOS for scroll animations -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- AOS (Animation on Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
-    <!-- GSAP for subtle entrance animations -->
+    <!-- GSAP -->
     <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet" />
 
-    <style>
-        /* === Defensive global layout fixes === */
-        :root {
-            --blue: #A8DDE6;
-            --cream: #FFF7E6;
-            --peach: #F7D6A5;
-            --orange: #F4A261;
-            --dark: #5C4033;
-            --muted: #9B8370;
-            --glass: rgba(255, 255, 255, 0.7);
-        }
+    <!-- Style utama -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-        /* ensure consistent box sizing */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-        }
-
-        html,
-        body {
-            width: 100%;
-            /* Prevent horizontal scroll globally (defensive) */
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            word-break: break-word;
-            /* avoid ultra-long words expanding viewport */
-        }
-
-        body {
-            font-family: 'Quicksand', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-            background: linear-gradient(180deg, var(--cream), #fff);
-            color: var(--dark);
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* header blur + glass */
-        .nav-glass {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(6px);
-            border-bottom: 1px solid rgba(92, 64, 51, 0.06);
-            left: 0;
-            right: 0;
-        }
-
-        /* Card look */
-        .card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98));
-            border: 1px solid rgba(92, 64, 51, 0.06);
-            box-shadow: 0 8px 20px rgba(92, 64, 51, 0.06);
-            overflow: hidden;
-            /* prevent children transforms from spilling out */
-        }
-
-        /* modern button */
-        .btn-order {
-            background: linear-gradient(90deg, var(--blue), #57acbb);
-            color: white;
-            box-shadow: 0 8px 24px rgba(231, 111, 81, 0.18);
-            transition: transform .18s cubic-bezier(.2, .9, .3, 1), box-shadow .18s;
-        }
-
-        .btn-order:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 18px 36px rgba(231, 111, 81, 0.22);
-        }
-
-        .btn-order-wa {
-            background: linear-gradient(90deg, #86dca6, #25D366);
-            color: white;
-            box-shadow: 0 8px 24px rgba(18, 140, 126, 0.18);
-            transition: transform .18s cubic-bezier(.2, .9, .3, 1), box-shadow .18s;
-        }
-
-        .btn-order-wa:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 18px 36px rgba(18, 140, 126, 0.22);
-        }
-
-        /* quantity pill */
-        .qty {
-            background: var(--glass);
-            border: 1px solid rgba(92, 64, 51, 0.06);
-            border-radius: 10px;
-            padding: .25rem .6rem;
-            min-width: 56px;
-        }
-
-        /* subtle floating */
-        .float-up {
-            transform: translateY(6px);
-        }
-
-        .float-up.loaded {
-            transform: translateY(0);
-            transition: transform .6s cubic-bezier(.2, .9, .3, 1);
-        }
-
-        /* nav mobile: use width:100 + box-sizing to avoid extra horizontal size due to padding */
-        .mobile-menu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height .28s ease;
-            width: 100%;
-            left: 0;
-            right: 0;
-            box-sizing: border-box;
-        }
-
-        .mobile-menu.open {
-            /* limit to viewport height to avoid pushing layout too far */
-            max-height: 80vh;
-            padding-bottom: 20px;
-            overflow-y: auto;
-        }
-
-        /* nice focus */
-        a:focus,
-        button:focus,
-        input:focus {
-            outline: 3px solid rgba(164, 221, 230, 0.25);
-            outline-offset: 2px;
-        }
-
-        .accent-bar {
-            height: 4px;
-            background: linear-gradient(90deg, var(--blue), var(--peach));
-            border-radius: 8px;
-            width: 80px;
-            margin: .75rem auto 0;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .bca-gradient {
-            background: linear-gradient(270deg, #06b6d4, #3b82f6, #1e40af);
-            background-size: 600% 600%;
-            animation: bcaGradientMove 10s ease infinite;
-        }
-
-        @keyframes bcaGradientMove {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        /* prevent long numbers/words to break layout */
-        #rekening {
-            word-break: break-all;
-            white-space: normal;
-        }
-
-        /* small-screen adjustments */
-        @media (max-width: 420px) {
-            .hero-title {
-                font-size: 1.6rem;
-                line-height: 1.15;
-            }
-
-            .hero-sub {
-                font-size: 0.95rem;
-            }
-
-            header .max-w-6xl {
-                padding-left: 0.75rem;
-                padding-right: 0.75rem;
-            }
-
-            .qty input {
-                width: 44px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- Header -->
+  <body>
+    <!-- ================= HEADER ================= -->
     <header class="fixed w-full z-50 nav-glass">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-3">
-                <img src="risolweb_logo.png" alt="Risolweb logo" class="h-10 sm:h-12 w-auto" loading="lazy">
-            </a>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
 
-            <!-- Desktop nav -->
-            <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
-                <a class="nav-link transition-colors hover:text-[var(--orange)]" href="#menu">Menu</a>
-                <a class="nav-link transition-colors hover:text-[var(--orange)]" href="#cara">Cara Order</a>
-                <a class="nav-link transition-colors hover:text-[var(--orange)]" href="#bayar">Pembayaran</a>
-                <a class="nav-link transition-colors hover:text-[var(--orange)]" href="#kontak">Kontak</a>
-                <a id="nav-cta" href="#menu"
-                    class="ml-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg btn-order text-sm">Pesan
-                    Sekarang</a>
-            </nav>
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-3">
+          <img src="./img/risolweb_logo.png" alt="Risolweb logo" class="h-10 sm:h-12 w-auto" loading="lazy" />
+        </a>
 
-            <!-- Mobile hamburger -->
-            <div class="md:hidden">
-                <button id="hambtn" aria-label="Buka menu" aria-expanded="false"
-                    class="p-2 rounded-md bg-white shadow-sm">
-                    <svg id="hambsvg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path id="path1" d="M4 7h16M4 12h16M4 17h16" stroke="#5C4033" stroke-width="1.6"
-                            stroke-linecap="round" />
-                    </svg>
-                </button>
-            </div>
+        <!-- Navigasi desktop -->
+        <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
+          <a class="nav-link hover:text-[var(--orange)]" href="#menu">Menu</a>
+          <a class="nav-link hover:text-[var(--orange)]" href="#cara">Cara Order</a>
+          <a class="nav-link hover:text-[var(--orange)]" href="#bayar">Pembayaran</a>
+          <a class="nav-link hover:text-[var(--orange)]" href="#kontak">Kontak</a>
+          <a id="nav-cta" href="#menu" class="ml-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg btn-order text-sm">Pesan Sekarang</a>
+        </nav>
+
+        <!-- Tombol hamburger mobile -->
+        <div class="md:hidden">
+          <button id="hambtn" aria-label="Buka menu" aria-expanded="false" class="p-2 rounded-md bg-white shadow-sm">
+            <svg id="hambsvg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path id="path1" d="M4 7h16M4 12h16M4 17h16" stroke="#5C4033" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </button>
         </div>
+      </div>
 
-        <!-- Mobile menu -->
-        <div id="mobileMenu" class="mobile-menu md:hidden px-4 sm:px-6 bg-white/90">
-            <div class="flex flex-col gap-2 pt-2">
-                <a href="#menu" class="py-3 px-2 rounded hover:bg-gray-50">Menu</a>
-                <a href="#cara" class="py-3 px-2 rounded hover:bg-gray-50">Cara Order</a>
-                <a href="#bayar" class="py-3 px-2 rounded hover:bg-gray-50">Pembayaran</a>
-                <a href="#kontak" class="py-3 px-2 rounded hover:bg-gray-50">Kontak</a>
-            </div>
+      <!-- Menu mobile -->
+      <div id="mobileMenu" class="mobile-menu md:hidden px-4 sm:px-6 bg-white/90">
+        <div class="flex flex-col gap-2 pt-2">
+          <a href="#menu" class="py-3 px-2 rounded hover:bg-gray-50">Menu</a>
+          <a href="#cara" class="py-3 px-2 rounded hover:bg-gray-50">Cara Order</a>
+          <a href="#bayar" class="py-3 px-2 rounded hover:bg-gray-50">Pembayaran</a>
+          <a href="#kontak" class="py-3 px-2 rounded hover:bg-gray-50">Kontak</a>
         </div>
+      </div>
     </header>
 
-    <!-- Hero -->
+    <!-- ================= HERO ================= -->
     <main class="pt-24">
-        <section class="relative overflow-hidden">
-            <div
-                class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20 flex flex-col lg:flex-row items-center gap-10">
-                <!-- left -->
-                <div class="lg:w-1/2" data-aos="fade-right">
-                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight hero-title"
-                        style="color:var(--dark);">Risolweb — <span style="color:var(--orange)">Risol Modern</span></h1>
-                    <p class="mt-3 sm:mt-4 text-base sm:text-lg text-[var(--muted)] max-w-xl hero-sub">Risolweb
-                        menggabungkan cita rasa tradisional risol dengan pengalaman pemesanan modern. Pesan cepat via
-                        WhatsApp, bayar mudah lewat QRIS atau transfer.</p>
+      <section class="relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20 flex flex-col lg:flex-row items-center gap-10">
 
-                    <div class="mt-6 flex flex-wrap gap-3">
-                        <a href="#menu"
-                            class="btn-order inline-flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-white text-sm shadow-lg">Pesan
-                            Sekarang</a>
-                        <button id="scrollDemo"
-                            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white border shadow-sm text-sm">Lihat
-                            Cara Order</button>
-                    </div>
+          <!-- Bagian kiri (judul + teks) -->
+          <div class="lg:w-1/2" data-aos="fade-right">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight hero-title" style="color: var(--dark)">
+              Risolweb — <span style="color: var(--orange)">Risol Modern</span>
+            </h1>
 
-                    <div class="mt-6 text-sm text-[var(--muted)]">
-                        <div class="flex items-center gap-3">
-                            <div class="w-3 h-3 rounded-full" style="background:var(--blue)"></div>
-                            <span>Higienis • Kemasan Mika • Pengiriman Cepat</span>
-                        </div>
-                    </div>
+            <p class="mt-3 sm:mt-4 text-base sm:text-lg text-[var(--muted)] max-w-xl hero-sub">
+              Risolweb menggabungkan cita rasa tradisional risol dengan pengalaman pemesanan modern. Pesan cepat via WhatsApp, bayar mudah lewat QRIS atau transfer.
+            </p>
+
+            <!-- Tombol aksi -->
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a href="#menu" class="btn-order inline-flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-white text-sm shadow-lg">Pesan Sekarang</a>
+              <button id="scrollDemo" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white border shadow-sm text-sm">Lihat Cara Order</button>
+            </div>
+
+            <!-- Info kecil -->
+            <div class="mt-6 text-sm text-[var(--muted)]">
+              <div class="flex items-center gap-3">
+                <div class="w-3 h-3 rounded-full" style="background: var(--blue)"></div>
+                <span>Higienis • Kemasan Mika • Pengiriman Cepat</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bagian kanan (gambar produk) -->
+          <div class="lg:w-1/2 flex justify-center" data-aos="zoom-in">
+            <div class="card rounded-3xl p-5 sm:p-6 w-full max-w-md transform hover:scale-105">
+              <div class="flex items-center gap-4 sm:gap-6">
+                <img src="./img/risol.jpg" alt="Risol sample" class="h-32 sm:h-36 rounded-xl shadow-md object-cover float-up" loading="lazy" />
+                <div>
+                  <h3 class="text-lg sm:text-xl font-semibold">Risol Sayur & Mayo</h3>
+                  <p class="text-sm text-[var(--muted)] mt-1">Beli risol sekarang bisa lewat website loh!</p>
+                  <div class="accent-bar"></div>
                 </div>
-
-                <!-- right (illustration) -->
-                <div class="lg:w-1/2 flex justify-center" data-aos="zoom-in">
-                    <div class="card rounded-3xl p-5 sm:p-6 w-full max-w-md transform transition-all hover:scale-105">
-                        <div class="flex items-center gap-4 sm:gap-6">
-                            <img src="risol.jpg" alt="Risol sample"
-                                class="h-32 sm:h-36 rounded-xl shadow-md object-cover float-up" loading="lazy">
-                            <div>
-                                <h3 class="text-lg sm:text-xl font-semibold">Risol Sayur & Mayo</h3>
-                                <p class="text-sm text-[var(--muted)] mt-1">Beli risol sekarang bisa lewat website loh!
-                                </p>
-                                <div class="accent-bar"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
-        </section>
+          </div>
 
-        <!-- Menu -->
-        <section id="menu" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
-            <div class="text-center mb-8 sm:mb-12" data-aos="fade-up">
-                <h2 class="text-2xl sm:text-3xl font-bold" style="color:var(--dark)">Menu</h2>
-                <p class="mt-2 text-[var(--muted)] max-w-2xl mx-auto">Pilih varian, atur jumlah, lalu klik Pesan via
-                    WhatsApp — otomatis terisi format pemesanan.</p>
+        </div>
+      </section>
+
+      <!-- ================= MENU ================= -->
+      <section id="menu" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+        <div class="text-center mb-8 sm:mb-12" data-aos="fade-up">
+          <h2 class="text-2xl sm:text-3xl font-bold" style="color: var(--dark)">Menu</h2>
+          <p class="mt-2 text-[var(--muted)] max-w-2xl mx-auto">
+            Pilih varian, atur jumlah, lalu klik Pesan via WhatsApp — otomatis terisi format pemesanan.
+          </p>
+        </div>
+
+        <!-- Dua kartu menu -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+
+          <!-- Kartu Risol Sayur -->
+          <article class="card rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="50">
+            <img src="./img/risol_sayur.jpg" alt="Risol Sayur" class="h-36 sm:h-44 w-36 sm:w-44 object-cover rounded-xl shadow-lg mb-4" loading="lazy" />
+            <h3 class="font-semibold text-lg sm:text-xl">Risol Sayur</h3>
+            <p class="text-[var(--muted)] mt-2">Kentang & wortel, gurih dan hangat.</p>
+
+            <div class="mt-4 flex items-center gap-3">
+              <div class="qty inline-flex items-center px-2 py-1">
+                <button class="dec text-lg px-2" data-for="sayur" aria-label="Kurangi">−</button>
+                <input class="mx-1 w-12 sm:w-16 text-center bg-transparent border-none" id="input-sayur" type="number" min="0" value="0" aria-label="Jumlah Risol Sayur" />
+                <button class="inc text-lg px-2" data-for="sayur" aria-label="Tambah">+</button>
+              </div>
+              <div class="text-lg font-bold text-[var(--orange)]">Rp2.000</div>
             </div>
+          </article>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-                <!-- Card Sayur -->
-                <article class="card rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center" data-aos="fade-up"
-                    data-aos-delay="50">
-                    <img src="risol_sayur.jpg" alt="Risol Sayur"
-                        class="h-36 sm:h-44 w-36 sm:w-44 object-cover rounded-xl shadow-lg mb-4 lazy-img"
-                        loading="lazy">
-                    <h3 class="font-semibold text-lg sm:text-xl">Risol Sayur</h3>
-                    <p class="text-[var(--muted)] mt-2">Kentang & wortel, gurih dan hangat.</p>
+          <!-- Kartu Risol Mayo -->
+          <article class="card rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="120">
+            <img src="./img/risol_mayo.jpg" alt="Risol Mayo" class="h-36 sm:h-44 w-36 sm:w-44 object-cover rounded-xl shadow-lg mb-4" loading="lazy" />
+            <h3 class="font-semibold text-lg sm:text-xl">Risol Mayo</h3>
+            <p class="text-[var(--muted)] mt-2">Mayonnaise creamy yang meleleh.</p>
 
-                    <div class="mt-4 flex items-center gap-3">
-                        <div class="qty inline-flex items-center px-2 py-1">
-                            <button class="dec text-lg px-2" data-for="sayur" aria-label="Kurangi">−</button>
-                            <input class="mx-1 w-12 sm:w-16 text-center bg-transparent border-none" id="input-sayur"
-                                type="number" min="0" value="0" aria-label="Jumlah Risol Sayur" />
-                            <button class="inc text-lg px-2" data-for="sayur" aria-label="Tambah">+</button>
-                        </div>
-                        <div class="text-lg font-bold text-[var(--orange)]">Rp2.000</div>
-                    </div>
-                </article>
+            <div class="mt-4 flex items-center gap-3">
+              <div class="qty inline-flex items-center px-2 py-1">
+                <button class="dec text-lg px-2" data-for="mayo" aria-label="Kurangi">−</button>
+                <input class="mx-1 w-12 sm:w-16 text-center bg-transparent border-none" id="input-mayo" type="number" min="0" value="0" aria-label="Jumlah Risol Mayo" />
+                <button class="inc text-lg px-2" data-for="mayo" aria-label="Tambah">+</button>
+              </div>
+              <div class="text-lg font-bold text-[var(--orange)]">Rp3.000</div>
+            </div>
+          </article>
 
-                <!-- Card Mayo -->
-                <article class="card rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center" data-aos="fade-up"
-                    data-aos-delay="120">
-                    <img src="risol_mayo.jpg" alt="Risol Mayo"
-                        class="h-36 sm:h-44 w-36 sm:w-44 object-cover rounded-xl shadow-lg mb-4 lazy-img"
-                        loading="lazy">
-                    <h3 class="font-semibold text-lg sm:text-xl">Risol Mayo</h3>
-                    <p class="text-[var(--muted)] mt-2">Mayonnaise creamy yang meleleh.</p>
+        </div>
 
-                    <div class="mt-4 flex items-center gap-3">
-                        <div class="qty inline-flex items-center px-2 py-1">
-                            <button class="dec text-lg px-2" data-for="mayo" aria-label="Kurangi">−</button>
-                            <input class="mx-1 w-12 sm:w-16 text-center bg-transparent border-none" id="input-mayo"
-                                type="number" min="0" value="0" aria-label="Jumlah Risol Mayo" />
-                            <button class="inc text-lg px-2" data-for="mayo" aria-label="Tambah">+</button>
-                        </div>
-                        <div class="text-lg font-bold text-[var(--orange)]">Rp3.000</div>
-                    </div>
-                </article>
+        <!-- Ringkasan pesanan (cart preview) -->
+        <div class="mt-8 w-full max-w-6xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+          <div class="card rounded-2xl p-6 w-full grid grid-cols-1 sm:grid-cols-4 gap-6 items-start">
+
+            <!-- Total item -->
+            <div class="flex flex-col text-center sm:text-left">
+              <div class="text-sm text-[var(--muted)]">Total Item</div>
+              <div id="cart-count" class="text-2xl font-bold">0</div>
             </div>
 
-            <!-- cart preview -->
-            <div class="mt-8 sm:mt-8 w-full max-w-6xl mx-auto" data-aos="fade-up" data-aos-delay="200">
-                <div class="card rounded-2xl p-6 w-full grid grid-cols-1 sm:grid-cols-4 gap-6 items-start">
-
-                    <!-- Total Items -->
-                    <div class="flex flex-col text-center sm:text-left">
-                        <div class="text-sm text-[var(--muted)]">Total Item</div>
-                        <div id="cart-count" class="text-2xl font-bold">0</div>
-                    </div>
-
-                    <!-- Subtotal -->
-                    <div class="flex flex-col text-center sm:text-left">
-                        <div class="text-sm text-[var(--muted)]">Subtotal</div>
-                        <div id="cart-sub" class="text-2xl font-bold">Rp0</div>
-                    </div>
-
-                    <!-- Form tambahan -->
-                    <div class="flex flex-col gap-3">
-                        <input type="text" id="customer-name" placeholder="Nama (wajib)" required
-                            class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[var(--blue)]">
-                        <input type="text" id="customer-address" placeholder="Alamat (opsional)"
-                            class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[var(--blue)]">
-                        <label for="meeting-location-option"
-                            class="text-sm text-[var(--muted)] font-medium mt-2">Tanggal pengiriman/pengambilan
-                            (opsional)</label>
-                        <input type="date" id="booking-date"
-                            class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[var(--blue)]">
-                        <!-- Opsi Pengambilan/Diantar -->
-                        <label for="pickup-option" class="text-sm text-[var(--muted)] font-medium">Pilihan
-                            pengambilan (opsional)</label>
-                        <select id="pickup-option"
-                            class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[var(--blue)]">
-                            <option value="-">-</option>
-                            <option value="Ambil sendiri">Ambil sendiri</option>
-                            <option value="Antar">Diantar</option>
-                        </select>
-
-                        <!-- Lokasi Pertemuan -->
-                        <label for="meeting-location-option" class="text-sm text-[var(--muted)] font-medium mt-2">Lokasi
-                            pertemuan (opsional)</label>
-                        <select id="meeting-location-option"
-                            class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[var(--blue)]">
-                            <option value="-">-</option>
-                            <option value="Sekolah">Sekolah</option>
-                            <option value="Lainnya">Lainnya</option>
-                        </select>
-
-                        <!-- Lokasi lain jika pilih Lainnya -->
-                        <label for="meeting-location-input" class="text-sm text-[var(--muted)] font-medium mt-2 hidden"
-                            id="meeting-location-label">Lokasi lain</label>
-                        <input type="text" id="meeting-location-input" placeholder="Lokasi lain (jika pilih Lainnya)"
-                            class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[var(--blue)] hidden">
-                    </div>
-
-                    <!-- Tombol WA -->
-                    <div class="flex justify-center sm:justify-end items-start">
-                        <button id="cart-order" class="btn-order px-6 py-2 rounded-2xl w-full sm:w-40">
-                            Pesan via WhatsApp
-                        </button>
-                    </div>
-
-                </div>
+            <!-- Subtotal -->
+            <div class="flex flex-col text-center sm:text-left">
+              <div class="text-sm text-[var(--muted)]">Subtotal</div>
+              <div id="cart-sub" class="text-2xl font-bold">Rp0</div>
             </div>
 
+            <!-- Form tambahan -->
+            <div class="flex flex-col gap-3">
+              <input type="text" id="customer-name" placeholder="Nama (wajib)" required class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[var(--blue)]" />
+              <input type="text" id="customer-address" placeholder="Alamat (opsional)" class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[var(--blue)]" />
 
-        </section>
+              <!-- Tanggal -->
+              <label class="text-sm text-[var(--muted)] font-medium mt-2">Tanggal pengiriman/pengambilan (opsional)</label>
+              <input type="date" id="booking-date" class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[var(--blue)]" />
 
-        <!-- Cara Order -->
-        <section id="cara" class="bg-[#FFF9F4] py-12 sm:py-16">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center" data-aos="fade-up">
-                <h3 class="text-xl sm:text-2xl font-bold" style="color:var(--dark)">Cara Order</h3>
-                <p class="mt-3 sm:mt-4 text-[var(--muted)]">Panduan singkat agar pemesanan mudah & cepat.</p>
-                <ol class="mt-6 text-left mx-auto max-w-xl space-y-2 sm:space-y-3 text-[var(--muted)]">
-                    <li>1. Pilih varian risol sesuai selera.</li>
-                    <li>2. Tentukan jumlah pesanan.</li>
-                    <li>3. Klik <b>Pesan via WhatsApp</b> untuk mengirim ringkasan order.</li>
-                    <li>4. Setelah konfirmasi, lakukan pembayaran melalui QRIS atau transfer bank.</li>
-                    <li>5. Kirim bukti pembayaran via WhatsApp untuk validasi.</li>
-                    <li>6. Pesanan segera diproses dan siap diambil atau diantar. 😊</li>
-                </ol>
+              <!-- Pilihan pengambilan -->
+              <label class="text-sm text-[var(--muted)] font-medium">Pilihan pengambilan (opsional)</label>
+              <select id="pickup-option" class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[var(--blue)]">
+                <option value="-">-</option>
+                <option value="Ambil sendiri">Ambil sendiri</option>
+                <option value="Antar">Diantar</option>
+              </select>
+
+              <!-- Lokasi pertemuan -->
+              <label class="text-sm text-[var(--muted)] font-medium mt-2">Lokasi pertemuan (opsional)</label>
+              <select id="meeting-location-option" class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[var(--blue)]">
+                <option value="-">-</option>
+                <option value="Sekolah">Sekolah</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+
+              <label id="meeting-location-label" class="text-sm text-[var(--muted)] font-medium mt-2 hidden">Lokasi lain</label>
+              <input type="text" id="meeting-location-input" placeholder="Lokasi lain (jika pilih Lainnya)" class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[var(--blue)] hidden" />
             </div>
-        </section>
 
-        <!-- Pembayaran -->
-        <section id="bayar" class="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-            <div class="text-center mb-6 sm:mb-8" data-aos="fade-up">
-                <h3 class="text-xl sm:text-2xl font-bold" style="color:var(--dark)">Metode Pembayaran</h3>
-                <p class="mt-2 text-[var(--muted)]">Pilih metode yang memudahkanmu.</p>
+            <!-- Tombol WA -->
+            <div class="flex justify-center sm:justify-end items-start">
+              <button id="cart-order" class="btn-order px-6 py-2 rounded-2xl w-full sm:w-40">Pesan via WhatsApp</button>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="card rounded-2xl p-6 text-center flex flex-col justify-center" data-aos="fade-right">
-                    <h4 class="font-semibold">QRIS</h4>
-                    <p><strong><em class="text-red-600">UNTUK SEMENTARA QRIS BELUM ADA</em></strong></p>
-                    <img src="sorry_emoji.jpg" alt="QRIS"
-                        class="mx-auto mt-4 rounded-lg w-28 h-28 sm:w-32 sm:h-32 object-contain lazy-img"
-                        loading="lazy">
-                    <p class="mt-4 text-[var(--muted)]">Scan untuk membayar langsung dari e-walletmu.</p>
-                </div>
+          </div>
+        </div>
+      </section>
 
-                <!-- Transfer Bank Card -->
-                <div role="button" tabindex="0"
-                    class="card rounded-2xl p-6 text-center flex flex-col justify-center bca-gradient text-white shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300"
-                    data-aos="fade-left" onclick="copyRekening()" onkeypress="if(event.key==='Enter') copyRekening()">
-                    <h4 class="font-semibold">Transfer Bank</h4>
-                    <img src="bca_logo.png" alt="BCA"
-                        class="mx-auto mt-4 rounded-lg w-auto h-10 object-contain lazy-img" loading="lazy">
-                    <p class="mt-3">
-                        BCA - <strong id="rekening">3980279374</strong><br>
-                        a.n. MUHAMMAD GADING YUWONO AL-SATAR
-                    </p>
-                    <div class="mt-4 flex items-center justify-center gap-2 text-sm opacity-90">
-                        <span>Klik untuk salin rekening</span>
-                    </div>
-                </div>
+      <!-- ================= CARA ORDER ================= -->
+      <section id="cara" class="bg-[#FFF9F4] py-12 sm:py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center" data-aos="fade-up">
+          <h3 class="text-xl sm:text-2xl font-bold" style="color: var(--dark)">Cara Order</h3>
+          <p class="mt-3 text-[var(--muted)]">Panduan singkat agar pemesanan mudah & cepat.</p>
 
-                <!-- Toast Notification -->
-                <div id="toast"
-                    class="fixed bottom-5 right-5 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 transition-opacity duration-500 z-[1000]">
-                    Nomor rekening berhasil disalin
-                </div>
-            </div>
-        </section>
+          <!-- Langkah-langkah -->
+          <ol class="mt-6 text-left mx-auto max-w-xl space-y-3 text-[var(--muted)]">
+            <li>1. Pilih varian risol sesuai selera.</li>
+            <li>2. Tentukan jumlah pesanan.</li>
+            <li>3. Klik <b>Pesan via WhatsApp</b> untuk mengirim ringkasan.</li>
+            <li>4. Lakukan pembayaran via QRIS atau transfer bank.</li>
+            <li>5. Kirim bukti pembayaran via WhatsApp.</li>
+            <li>6. Pesanan diproses dan siap diambil atau diantar.</li>
+          </ol>
+        </div>
+      </section>
 
-        <!-- Contact -->
-        <section id="kontak" class="bg-[#fffaf7] py-12 sm:py-16">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center" data-aos="fade-up">
-                <h3 class="text-xl sm:text-2xl font-bold" style="color:var(--dark)">Kontak & Lokasi</h3>
-                <p class="mt-3 text-[var(--muted)]">Untuk pemesanan dan pertanyaan, hubungi kami melalui WhatsApp.</p>
-                <a id="wa-contact" href="https://wa.me/6288299607239" target="_blank"
-                    class="btn-order-wa inline-flex items-center gap-3 mt-5 px-5 py-3 rounded-2xl text-white"> Chat
-                    WhatsApp </a>
-                <p class="mt-4 text-sm text-[var(--muted)]">Lokasi: SMK Hang Tuah 1 Jakarta / Warakas, Tanjung Priok.
-                </p>
-            </div>
-        </section>
+      <!-- ================= PEMBAYARAN ================= -->
+      <section id="bayar" class="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <div class="text-center mb-8" data-aos="fade-up">
+          <h3 class="text-xl sm:text-2xl font-bold" style="color: var(--dark)">Metode Pembayaran</h3>
+          <p class="mt-2 text-[var(--muted)]">Pilih metode yang memudahkanmu.</p>
+        </div>
 
-        <footer class="text-center py-8 text-sm text-[var(--muted)]">
-            © 2025 Risolweb • Risol Modern — Muhammad Gading Yuwono Al-Satar
-        </footer>
+        <div class="grid md:grid-cols-2 gap-6">
+
+          <!-- QRIS -->
+          <div class="card rounded-2xl p-6 text-center" data-aos="fade-right">
+            <h4 class="font-semibold">QRIS</h4>
+            <p><strong><em class="text-red-600">UNTUK SEMENTARA QRIS BELUM ADA</em></strong></p>
+            <img src="./img/sorry_emoji.jpg" alt="QRIS" class="mx-auto mt-4 rounded-lg w-28 h-28" loading="lazy" />
+            <p class="mt-4 text-[var(--muted)]">Scan untuk membayar dari e-walletmu.</p>
+          </div>
+
+          <!-- Transfer Bank -->
+          <div role="button" tabindex="0" class="card rounded-2xl p-6 text-center bca-gradient text-white shadow-2xl cursor-pointer hover:scale-105 transition-transform" data-aos="fade-left" onclick="copyRekening()" onkeypress="if(event.key==='Enter') copyRekening()">
+            <h4 class="font-semibold">Transfer Bank</h4>
+            <img src="./img/bca_logo.png" alt="BCA" class="mx-auto mt-4 h-10" loading="lazy" />
+            <p class="mt-3">
+              BCA - <strong id="rekening">3980279374</strong><br />
+              a.n. MUHAMMAD GADING YUWONO AL-SATAR
+            </p>
+            <div class="mt-4 text-sm opacity-90">Klik untuk salin rekening</div>
+          </div>
+
+          <!-- Toast notifikasi -->
+          <div id="toast" class="fixed bottom-5 right-5 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 transition-opacity">Nomor rekening berhasil disalin</div>
+        </div>
+      </section>
+
+      <!-- ================= KONTAK ================= -->
+      <section id="kontak" class="bg-[#fffaf7] py-12 sm:py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center" data-aos="fade-up">
+          <h3 class="text-xl sm:text-2xl font-bold" style="color: var(--dark)">Kontak & Lokasi</h3>
+          <p class="mt-3 text-[var(--muted)]">Hubungi kami untuk pemesanan.</p>
+
+          <a id="wa-contact" href="https://wa.me/6288299607239" target="_blank" class="btn-order-wa inline-flex items-center gap-3 mt-5 px-5 py-3 rounded-2xl text-white">Chat WhatsApp</a>
+
+          <p class="mt-4 text-sm text-[var(--muted)]">Lokasi: SMK Hang Tuah 1 Jakarta / Warakas, Tanjung Priok.</p>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="text-center py-8 text-sm text-[var(--muted)]">
+        © 2025 Risolweb • Risol Modern — Muhammad Gading Yuwono Al-Satar
+      </footer>
     </main>
 
-    <!-- Scripts -->
+    <!-- ================= SCRIPTS ================= -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({ duration: 750, once: true, offset: 120 });
-
-        // Mobile menu toggle (with accessible aria-expanded + icon swap)
-        const hambtn = document.getElementById('hambtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const hambsvg = document.getElementById('hambsvg');
-        const path1 = document.getElementById('path1');
-
-        function setMenuIcon(open) {
-            if (open) {
-                path1.setAttribute('d', 'M6 6L18 18M6 18L18 6');
-                path1.setAttribute('stroke-linecap', 'round');
-            } else {
-                path1.setAttribute('d', 'M4 7h16M4 12h16M4 17h16');
-            }
-        }
-
-        hambtn.addEventListener('click', () => {
-            const isOpen = mobileMenu.classList.toggle('open');
-            hambtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-            setMenuIcon(isOpen);
-        });
-
-        // Smooth scroll demo button
-        document.getElementById('scrollDemo').addEventListener('click', () => {
-            document.getElementById('cara').scrollIntoView({ behavior: 'smooth' });
-        });
-
-        // Cart logic
-        const inputSayur = document.getElementById('input-sayur');
-        const inputMayo = document.getElementById('input-mayo');
-        const cartCount = document.getElementById('cart-count');
-        const cartSub = document.getElementById('cart-sub');
-        const cartOrder = document.getElementById('cart-order');
-
-        const price = { sayur: 2000, mayo: 3000 };
-
-        function updateCart() {
-            const s = Math.max(0, parseInt(inputSayur.value) || 0);
-            const m = Math.max(0, parseInt(inputMayo.value) || 0);
-            const totalItems = s + m;
-            const sub = s * price.sayur + m * price.mayo;
-            cartCount.innerText = totalItems;
-            cartSub.innerText = `Rp${sub.toLocaleString()}`;
-        }
-
-        // inc/dec buttons
-        document.querySelectorAll('.inc').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const key = btn.dataset.for;
-                const input = document.getElementById('input-' + key);
-                input.value = Math.max(0, parseInt(input.value || 0) + 1);
-                updateCart();
-                animatePulse(input);
-            });
-        });
-        document.querySelectorAll('.dec').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const key = btn.dataset.for;
-                const input = document.getElementById('input-' + key);
-                input.value = Math.max(0, parseInt(input.value || 0) - 1);
-                updateCart();
-                animatePulse(input);
-            });
-        });
-
-        // cart-order (from cart preview)
-        cartOrder.addEventListener('click', () => {
-            const s = parseInt(inputSayur.value) || 0;
-            const m = parseInt(inputMayo.value) || 0;
-            if (s === 0 && m === 0) return alert('Keranjang kosong — tambahkan terlebih dahulu 😊');
-            sendWhatsapp({ sayur: s, mayo: m });
-        });
-
-        function sendWhatsapp(items) {
-            const phone = '6288299607239';
-            const s = items.sayur || 0;
-            const m = items.mayo || 0;
-            const total = s * price.sayur + m * price.mayo;
-            const note = encodeURIComponent(`Halo Risolweb! Saya mau pesan:\n- Risol Sayur: ${s} pcs\n- Risol Mayo: ${m} pcs\nTotal: Rp${total.toLocaleString()}\nMohon konfirmasi & instruksi pembayaran. Terima kasih 🙏`);
-            const url = `https://wa.me/${phone}?text=${note}`;
-            window.open(url, '_blank');
-        }
-
-        // animate pulse small feedback
-        function animatePulse(el) {
-            if (window.gsap) {
-                gsap.fromTo(el, { scale: 0.96 }, { scale: 1, duration: 0.28, ease: 'elastic.out(1,0.6)' });
-            }
-        }
-
-        // small entrance animation for hero float-up
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.float-up').forEach(el => el.classList.add('loaded'));
-            if (window.gsap) {
-                gsap.from('header img', { y: -8, opacity: 0, duration: .8, ease: 'power2.out' });
-            }
-        });
-
-        // update cart on manual input change (debounced)
-        [inputSayur, inputMayo].forEach(inp => {
-            let t;
-            inp.addEventListener('input', () => {
-                clearTimeout(t);
-                t = setTimeout(updateCart, 120);
-            });
-        });
-
-        // init
-        updateCart();
-
-        function copyRekening() {
-            const rekening = document.getElementById("rekening").innerText;
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(rekening).then(() => {
-                    const toast = document.getElementById("toast");
-                    toast.style.opacity = "1";
-                    setTimeout(() => { toast.style.opacity = "0"; }, 2000);
-                });
-            } else {
-                const ta = document.createElement('textarea');
-                ta.value = rekening;
-                ta.style.position = 'fixed';
-                ta.style.left = '-9999px';
-                document.body.appendChild(ta);
-                ta.select();
-                try { document.execCommand('copy'); } catch (e) { /* ignore */ }
-                document.body.removeChild(ta);
-                const toast = document.getElementById("toast");
-                toast.style.opacity = "1";
-                setTimeout(() => { toast.style.opacity = "0"; }, 2000);
-            }
-        }
-
-        // Optional: log elements that are wider than viewport for debugging
-        // (jalankan di console jika masih ada horizontal scroll)
-        function logOverflowingElements() {
-            const vw = document.documentElement.clientWidth;
-            const els = [...document.querySelectorAll('*')].filter(el => el.scrollWidth > vw + 1);
-            if (els.length) {
-                console.warn('Elemen overflow (lebih lebar dari viewport):', vw, els);
-            } else {
-                console.info('Tidak ada elemen yang overflow melewati viewport.');
-            }
-            return els;
-        }
-        // window.addEventListener('load', () => logOverflowingElements());
-
-        // Show/hide lokasi input jika pilih "Lainnya"
-        const meetingOption = document.getElementById('meeting-location-option');
-        const meetingInput = document.getElementById('meeting-location-input');
-
-        meetingOption.addEventListener('change', () => {
-            if (meetingOption.value === 'Lainnya') {
-                meetingInput.classList.remove('hidden');
-            } else {
-                meetingInput.classList.add('hidden');
-                meetingInput.value = '';
-            }
-        });
-
-        // Modifikasi sendWhatsapp untuk include form data
-        function sendWhatsapp(items) {
-            const phone = '6288299607239';
-            const s = items.sayur || 0;
-            const m = items.mayo || 0;
-
-            // ambil data form
-            const name = document.getElementById('customer-name').value.trim();
-            if (!name) return alert('Nama wajib diisi 😊');
-            const address = document.getElementById('customer-address').value.trim() || '-';
-            const date = document.getElementById('booking-date').value || '-';
-            const pickup = document.getElementById('pickup-option').value;
-            const meeting = meetingOption.value === 'Lainnya' ? (meetingInput.value || '-') : meetingOption.value;
-
-            const total = s * price.sayur + m * price.mayo;
-
-            const note = encodeURIComponent(`Halo Risolweb! Saya mau pesan:
-- Risol Sayur: ${s} pcs
-- Risol Mayo: ${m} pcs
-Total: Rp${total.toLocaleString()}
-
-Data Pemesan:
-- Nama: ${name}
-- Alamat: ${address}
-- Tanggal Booking: ${date}
-- Opsi: ${pickup}
-- Lokasi Pertemuan: ${meeting}
-
-Mohon konfirmasi & instruksi pembayaran. Terima kasih!`);
-
-            const url = `https://wa.me/${phone}?text=${note}`;
-            window.open(url, '_blank');
-        }
-
-    </script>
-</body>
-
+    <script src="script.js"></script>
+  </body>
 </html>
-
-
-

@@ -1,0 +1,197 @@
+/* === Warna-warna tema yang bisa dipakai ulang === */
+:root {
+  --blue: #a8dde6;
+  --cream: #fff7e6;
+  --peach: #f7d6a5;
+  --orange: #f4a261;
+  --dark: #5c4033;
+  --muted: #9b8370;
+  --glass: rgba(255, 255, 255, 0.7);
+}
+
+/* Biar semua elemen hitung ukuran dengan cara yang sama */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  /* Biar tidak bisa geser ke samping */
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  /* Biar klik di HP tidak ada highlight aneh */
+  -webkit-tap-highlight-color: transparent;
+  /* Biar tulisan lebih halus */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Biar kata terlalu panjang tidak bikin layar melebar */
+  word-break: break-word;
+}
+
+body {
+  font-family: "Quicksand", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  /* Latar belakang gradasi putih–cream */
+  background: linear-gradient(180deg, var(--cream), #fff);
+  color: var(--dark);
+  /* Biar scroll lebih mulus di iPhone */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Header transparan + blur */
+.nav-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(92, 64, 51, 0.06);
+  left: 0;
+  right: 0;
+}
+
+/* Tampilan card yang lembut */
+.card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.98)
+  );
+  border: 1px solid rgba(92, 64, 51, 0.06);
+  box-shadow: 0 8px 20px rgba(92, 64, 51, 0.06);
+  /* Biar isi card tidak keluar */
+  overflow: hidden;
+}
+
+/* Tombol utama biru */
+.btn-order {
+  background: linear-gradient(90deg, var(--blue), #57acbb);
+  color: white;
+  box-shadow: 0 8px 24px rgba(231, 111, 81, 0.18);
+  transition: transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.18s;
+}
+
+/* Tombol biru saat di-hover: sedikit naik */
+.btn-order:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 18px 36px rgba(231, 111, 81, 0.22);
+}
+
+/* Tombol WhatsApp hijau */
+.btn-order-wa {
+  background: linear-gradient(90deg, #86dca6, #25d366);
+  color: white;
+  box-shadow: 0 8px 24px rgba(18, 140, 126, 0.18);
+  transition: transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.18s;
+}
+
+.btn-order-wa:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 18px 36px rgba(18, 140, 126, 0.22);
+}
+
+/* Kotak jumlah produk */
+.qty {
+  background: var(--glass);
+  border: 1px solid rgba(92, 64, 51, 0.06);
+  border-radius: 10px;
+  padding: 0.25rem 0.6rem;
+  min-width: 56px;
+}
+
+/* Elemen yang naik perlahan */
+.float-up {
+  transform: translateY(6px);
+}
+
+.float-up.loaded {
+  transform: translateY(0);
+  transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+/* Menu mobile yang bisa dibuka-tutup */
+.mobile-menu {
+  max-height: 0;
+  overflow: hidden; /* Biar isi tidak terlihat saat tertutup */
+  transition: max-height 0.28s ease;
+  width: 100%;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+}
+
+/* Menu mobile saat terbuka */
+.mobile-menu.open {
+  max-height: 80vh; /* Biar tidak terlalu panjang */
+  padding-bottom: 20px;
+  overflow-y: auto; /* Biar isinya bisa discroll */
+}
+
+/* Outline fokus yang lembut (aksesibilitas) */
+a:focus,
+button:focus,
+input:focus {
+  outline: 3px solid rgba(164, 221, 230, 0.25);
+  outline-offset: 2px;
+}
+
+/* Garis warna di bawah judul */
+.accent-bar {
+  height: 4px;
+  background: linear-gradient(90deg, var(--blue), var(--peach));
+  border-radius: 8px;
+  width: 80px;
+  margin: 0.75rem auto 0;
+}
+
+img {
+  max-width: 100%; /* Biar gambar tidak lebih besar dari kontainer */
+  height: auto;
+  display: block;
+}
+
+/* Gradasi animasi untuk box rekening BCA */
+.bca-gradient {
+  background: linear-gradient(270deg, #06b6d4, #3b82f6, #1e40af);
+  background-size: 600% 600%;
+  animation: bcaGradientMove 10s ease infinite;
+}
+
+@keyframes bcaGradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Biar nomor rekening panjang tidak melebarkan layar */
+#rekening {
+  word-break: break-all;
+  white-space: normal;
+}
+
+/* Aturan khusus untuk HP kecil */
+@media (max-width: 420px) {
+  .hero-title {
+    font-size: 1.6rem;
+    line-height: 1.15;
+  }
+
+  .hero-sub {
+    font-size: 0.95rem;
+  }
+
+  header .max-w-6xl {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .qty input {
+    width: 44px;
+  }
+}
