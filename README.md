@@ -1,58 +1,60 @@
-# Risolweb — Modern Risol
+# Risolweb — Risol Modern
 
-## Project Description
+## Overview
 
-**Risolweb** is a website that showcases and promotes traditional Indonesian snacks with a modern twist, specifically **Risol** in various flavors. The website is designed to provide product information to potential customers with an attractive and interactive presentation.
+Risolweb is a simple static website that offers traditional Indonesian snack **“risol”** with a modern ordering experience. Users can browse product variants, check prices, place orders via WhatsApp, and make payments via bank transfer.
 
-## About Risol
+---
 
-Risol is a traditional Indonesian snack shaped like an egg roll, filled with savory ingredients. Modern Risol introduces innovative variants while maintaining authentic Indonesian flavor.
+## ⚠️ Disclaimer
 
-### Product Variants
+This website is presented entirely in **Indonesian (Bahasa Indonesia)**.  
+The language is intentionally used to match the target audience and local customers of the product.  
+Non-Indonesian users may use a translator if needed, as all product information and ordering instructions follow the local Indonesian context.
 
-- **Vegetable Risol**: Filled with seasoned potatoes and carrots, offering a classic taste with a balanced texture.
+---
 
-## Website Features
+## Products & Pricing
 
-- **Product Gallery**: Displays appetizing photos of risol products  
-- **Product Descriptions**: Detailed information about each variant  
-- **Responsive Design**: User-friendly layout accessible on multiple devices  
-- **Modern Branding**: Contemporary visual presentation for a traditional snack  
+| Variant           | Description                                                                               | Price   |
+|-------------------|-------------------------------------------------------------------------------------------|--------:|
+| Vegetables Risol  | Filled with seasoned potato, carrot, and sliced boiled egg for a classic savory taste.     | Rp 2.000 |
+| Mayonnaise Risol  | Filled with creamy mayonnaise, savory ingredients, and sliced boiled egg for a richer flavor. | Rp 3.000 |
 
-## Technology
+---
 
-- **Platform**: GitHub Pages  
-- **Languages**: HTML/CSS/JavaScript  
-- **Structure**: Static Website  
+## Ordering Process
 
-## Repository
+1. Choose your preferred risol variant and quantity.  
+2. Click **“Order via WhatsApp”** — this will automatically generate a pre-filled message.  
+3. Complete your payment via **Bank Transfer** (QRIS currently unavailable).  
+4. Send your payment proof through WhatsApp.  
+5. Your order will be processed and prepared for pickup or delivery.
 
-- **GitHub**: [gadingyuwono/risolweb](https://github.com/gadingyuwono/risolweb)  
-- **Live URL**: https://gadingyuwono.github.io/risolweb  
+---
 
-## Target Audience
+## Contact & Location
 
-- Fans of traditional Indonesian snacks  
-- Consumers seeking high-quality snacks  
-- Customers interested in homemade or small-business food products  
-- People who appreciate authentic flavors with a modern twist  
+- Orders are placed directly via WhatsApp.  
+- Available for both pickup and delivery. Delivery can be made to any location as long as it is reachable by the seller.  
+- Pickup location is available at SMK Hang Tuah 1 Jakarta or Warakas, Tanjung Priok.
 
-## How to Use
+---
 
-1. Visit the website: https://gadingyuwono.github.io/risolweb  
-2. Explore available risol variants  
-3. Read product descriptions  
-4. Check the photo gallery for visuals  
+## Website Information
 
-## Contribution
+- Hosted on GitHub Pages
+- Built using static HTML / CSS / JavaScript
+- Live site: https://gadingyuwono.github.io/risolweb
 
-For contributions or questions, contact the repository owner or open an issue on GitHub.
+---
 
-## License
+## Owner
 
-This project is hosted on GitHub Pages. For detailed licensing information, see the official GitHub repository.
+Muhammad Gading Yuwono Al-Satar  
 
-**Created by**: Gading Yuwono  
-**Last Updated**: 2025
+---
 
 _#MadeByGading with ❤️_
+
+© 2025 Risolweb — Risol Modern
