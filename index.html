@@ -1,39 +1,31 @@
 <!DOCTYPE html>
 <html lang="id">
   <head>
-    <!-- Metadata dasar -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Risolweb - Risol Modern</title>
     <link rel="icon" href="./img/risolweb_logo_2.png" type="image/png" />
 
-    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- AOS (Animation on Scroll) -->
+    
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-
-    <!-- GSAP -->
-    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js" defer></script>
-
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet" />
-
-    <!-- Style utama -->
+    
     <link rel="stylesheet" href="style.css" />
+
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    
+    <script src="script.js" defer></script>
   </head>
 
   <body>
-    <!-- ================= HEADER ================= -->
     <header class="fixed w-full z-50 nav-glass">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-
-        <!-- Logo -->
         <a href="#" class="flex items-center gap-3">
           <img src="./img/risolweb_logo.png" alt="Risolweb logo" class="h-10 sm:h-12 w-auto" loading="lazy" />
         </a>
 
-        <!-- Navigasi desktop -->
         <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
           <a class="nav-link hover:text-[var(--orange)]" href="#menu">Menu</a>
           <a class="nav-link hover:text-[var(--orange)]" href="#cara">Cara Order</a>
@@ -42,7 +34,6 @@
           <a id="nav-cta" href="#menu" class="ml-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg btn-order text-sm">Pesan Sekarang</a>
         </nav>
 
-        <!-- Tombol hamburger mobile -->
         <div class="md:hidden">
           <button id="hambtn" aria-label="Buka menu" aria-expanded="false" class="p-2 rounded-md bg-white shadow-sm">
             <svg id="hambsvg" width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -52,7 +43,6 @@
         </div>
       </div>
 
-      <!-- Menu mobile -->
       <div id="mobileMenu" class="mobile-menu md:hidden px-4 sm:px-6 bg-white/90">
         <div class="flex flex-col gap-2 pt-2">
           <a href="#menu" class="py-3 px-2 rounded hover:bg-gray-50">Menu</a>
@@ -63,28 +53,22 @@
       </div>
     </header>
 
-    <!-- ================= HERO ================= -->
     <main class="pt-24">
       <section class="relative overflow-hidden">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20 flex flex-col lg:flex-row items-center gap-10">
-
-          <!-- Bagian kiri (judul + teks) -->
           <div class="lg:w-1/2" data-aos="fade-right">
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight hero-title" style="color: var(--dark)">
               Risolweb — <span style="color: var(--orange)">Risol Modern</span>
             </h1>
-
             <p class="mt-3 sm:mt-4 text-base sm:text-lg text-[var(--muted)] max-w-xl hero-sub">
               Risolweb menggabungkan cita rasa tradisional risol dengan pengalaman pemesanan modern. Pesan cepat via WhatsApp, bayar mudah lewat QRIS atau transfer.
             </p>
 
-            <!-- Tombol aksi -->
             <div class="mt-6 flex flex-wrap gap-3">
               <a href="#menu" class="btn-order inline-flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-white text-sm shadow-lg">Pesan Sekarang</a>
               <button id="scrollDemo" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white border shadow-sm text-sm">Lihat Cara Order</button>
             </div>
 
-            <!-- Info kecil -->
             <div class="mt-6 text-sm text-[var(--muted)]">
               <div class="flex items-center gap-3">
                 <div class="w-3 h-3 rounded-full" style="background: var(--blue)"></div>
@@ -93,7 +77,6 @@
             </div>
           </div>
 
-          <!-- Bagian kanan (gambar produk) -->
           <div class="lg:w-1/2 flex justify-center" data-aos="zoom-in">
             <div class="card rounded-3xl p-5 sm:p-6 w-full max-w-md">
               <div class="flex items-center gap-4 sm:gap-6">
@@ -105,11 +88,9 @@
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
-      <!-- ================= MENU ================= -->
       <section id="menu" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
         <div class="text-center mb-8 sm:mb-12" data-aos="fade-up">
           <h2 class="text-2xl sm:text-3xl font-bold" style="color: var(--dark)">Menu</h2>
@@ -118,15 +99,11 @@
           </p>
         </div>
 
-        <!-- Dua kartu menu -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-
-          <!-- Kartu Risol Sayur -->
           <article class="card rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="50">
             <img src="./img/risol_sayur.jpg" alt="Risol Sayur" class="h-36 sm:h-44 w-36 sm:w-44 object-cover rounded-xl shadow-lg mb-4" loading="lazy" />
             <h3 class="font-semibold text-lg sm:text-xl">Risol Sayur</h3>
             <p class="text-[var(--muted)] mt-2">Kentang & wortel, gurih dan hangat.</p>
-
             <div class="mt-4 flex items-center gap-3">
               <div class="qty inline-flex items-center px-2 py-1">
                 <button class="dec text-lg px-2" data-for="sayur" aria-label="Kurangi">−</button>
@@ -137,12 +114,10 @@
             </div>
           </article>
 
-          <!-- Kartu Risol Mayo -->
           <article class="card rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="120">
             <img src="./img/risol_mayo.jpg" alt="Risol Mayo" class="h-36 sm:h-44 w-36 sm:w-44 object-cover rounded-xl shadow-lg mb-4" loading="lazy" />
             <h3 class="font-semibold text-lg sm:text-xl">Risol Mayo</h3>
             <p class="text-[var(--muted)] mt-2">Mayonnaise creamy yang meleleh.</p>
-
             <div class="mt-4 flex items-center gap-3">
               <div class="qty inline-flex items-center px-2 py-1">
                 <button class="dec text-lg px-2" data-for="mayo" aria-label="Kurangi">−</button>
@@ -152,35 +127,25 @@
               <div class="text-lg font-bold text-[var(--orange)]">Rp3.000</div>
             </div>
           </article>
-
         </div>
 
-        <!-- Ringkasan pesanan (cart preview) -->
         <div class="mt-8 w-full max-w-6xl mx-auto" data-aos="fade-up" data-aos-delay="200">
           <div class="card rounded-2xl p-6 w-full grid grid-cols-1 sm:grid-cols-4 gap-6 items-start">
-
-            <!-- Total item -->
             <div class="flex flex-col text-center sm:text-left">
               <div class="text-sm text-[var(--muted)]">Total Item</div>
               <div id="cart-count" class="text-2xl font-bold">0</div>
             </div>
 
-            <!-- Subtotal -->
             <div class="flex flex-col text-center sm:text-left">
               <div class="text-sm text-[var(--muted)]">Subtotal</div>
               <div id="cart-sub" class="text-2xl font-bold">Rp0</div>
             </div>
 
-            <!-- Form tambahan -->
             <div class="flex flex-col gap-3">
               <input type="text" id="customer-name" placeholder="Nama (wajib)" required class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[var(--blue)]" />
               <input type="text" id="customer-address" placeholder="Alamat (opsional)" class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[var(--blue)]" />
-
-              <!-- Tanggal -->
               <label class="text-sm text-[var(--muted)] font-medium mt-2">Tanggal pengiriman/pengambilan (opsional)</label>
               <input type="date" id="booking-date" class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[var(--blue)]" />
-
-              <!-- Pilihan pengambilan -->
               <label class="text-sm text-[var(--muted)] font-medium">Pilihan pengambilan (opsional)</label>
               <select id="pickup-option" class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[var(--blue)]">
                 <option value="-">-</option>
@@ -188,7 +153,6 @@
                 <option value="Antar">Diantar</option>
               </select>
 
-              <!-- Lokasi pertemuan -->
               <label class="text-sm text-[var(--muted)] font-medium mt-2">Lokasi pertemuan (opsional)</label>
               <select id="meeting-location-option" class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[var(--blue)]">
                 <option value="-">-</option>
@@ -200,22 +164,17 @@
               <input type="text" id="meeting-location-input" placeholder="Lokasi lain (jika pilih Lainnya)" class="border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[var(--blue)] hidden" />
             </div>
 
-            <!-- Tombol WA -->
             <div class="flex justify-center sm:justify-end items-start">
               <button id="cart-order" class="btn-order px-6 py-2 rounded-2xl w-full sm:w-40">Pesan via WhatsApp</button>
             </div>
-
           </div>
         </div>
       </section>
 
-      <!-- ================= CARA ORDER ================= -->
       <section id="cara" class="bg-[#FFF9F4] py-12 sm:py-16">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center" data-aos="fade-up">
           <h3 class="text-xl sm:text-2xl font-bold" style="color: var(--dark)">Cara Order</h3>
           <p class="mt-3 text-[var(--muted)]">Panduan singkat agar pemesanan mudah & cepat.</p>
-
-          <!-- Langkah-langkah -->
           <ol class="mt-6 text-left mx-auto max-w-xl space-y-3 text-[var(--muted)]">
             <li>1. Pilih varian risol sesuai selera.</li>
             <li>2. Tentukan jumlah pesanan.</li>
@@ -227,7 +186,6 @@
         </div>
       </section>
 
-      <!-- ================= PEMBAYARAN ================= -->
       <section id="bayar" class="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <div class="text-center mb-8" data-aos="fade-up">
           <h3 class="text-xl sm:text-2xl font-bold" style="color: var(--dark)">Metode Pembayaran</h3>
@@ -235,8 +193,6 @@
         </div>
 
         <div class="grid md:grid-cols-2 gap-6">
-
-          <!-- QRIS -->
           <div class="card rounded-2xl p-6 text-center" data-aos="fade-right">
             <h4 class="font-semibold">QRIS</h4>
             <p><strong><em class="text-red-600">UNTUK SEMENTARA QRIS BELUM ADA</em></strong></p>
@@ -244,7 +200,6 @@
             <p class="mt-4 text-[var(--muted)]">Scan untuk membayar dari e-walletmu.</p>
           </div>
 
-          <!-- Transfer Bank -->
           <div role="button" tabindex="0" class="card rounded-2xl p-6 text-center bca-gradient text-white shadow-2xl cursor-pointer hover:scale-105 transition-transform" data-aos="fade-left" onclick="copyRekening()" onkeypress="if(event.key==='Enter') copyRekening()">
             <h4 class="font-semibold">Transfer Bank</h4>
             <img src="./img/bca_logo.png" alt="BCA" class="mx-auto mt-4 h-10" loading="lazy" />
@@ -255,33 +210,22 @@
             <div class="mt-4 text-sm opacity-90">Klik untuk salin rekening</div>
           </div>
 
-          <!-- Toast notifikasi -->
           <div id="toast" class="fixed bottom-5 right-5 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 transition-opacity">Nomor rekening berhasil disalin</div>
         </div>
       </section>
 
-      <!-- ================= KONTAK ================= -->
       <section id="kontak" class="bg-[#fffaf7] py-12 sm:py-16">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center" data-aos="fade-up">
           <h3 class="text-xl sm:text-2xl font-bold" style="color: var(--dark)">Kontak & Lokasi</h3>
           <p class="mt-3 text-[var(--muted)]">Hubungi kami untuk pemesanan.</p>
-
           <a id="wa-contact" href="https://wa.me/6288299607239" target="_blank" class="btn-order-wa inline-flex items-center gap-3 mt-5 px-5 py-3 rounded-2xl text-white">Chat WhatsApp</a>
-
           <p class="mt-4 text-sm text-[var(--muted)]">Lokasi: SMK Hang Tuah 1 Jakarta / Warakas, Tanjung Priok.</p>
         </div>
       </section>
 
-      <!-- Footer -->
       <footer class="text-center py-8 text-sm text-[var(--muted)]">
         © 2025 Risolweb • Risol Modern — Muhammad Gading Yuwono Al-Satar
       </footer>
     </main>
-
-    <!-- ================= SCRIPTS ================= -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
-    <script src="script.js" defer></script>
   </body>
-
 </html>
-
