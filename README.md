@@ -10,6 +10,8 @@ This website is entirely in **Indonesian (Bahasa Indonesia)**.
 The language is intentionally used to match the target audience and local customers.  
 Non-Indonesian users may use a translator if needed, as all product information and ordering instructions are tailored for the local context.
 
+Approximately 80% of this website’s code was generated using AI-powered Vibe Coding. This means most of the HTML, CSS, and JavaScript were produced automatically based on instructions, with minimal manual coding.
+
 ## Products & Pricing
 
 | Variant           | Description                                                                               | Price   |
