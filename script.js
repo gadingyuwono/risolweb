@@ -1,47 +1,39 @@
-// Mengaktifkan animasi AOS (biar elemen muncul halus)
 AOS.init({ duration: 750, once: true, offset: 120 });
 
-// Ambil tombol menu dan elemen-elemen ikon
 const hambtn = document.getElementById("hambtn");
 const mobileMenu = document.getElementById("mobileMenu");
 const hambsvg = document.getElementById("hambsvg");
 const path1 = document.getElementById("path1");
 
-// Ubah ikon menu (garis jadi silang, silang jadi garis)
+// Toggle menu icon (hamburger ↔ cross)
 function setMenuIcon(open) {
   if (open) {
-    // Bentuk "X"
     path1.setAttribute("d", "M6 6L18 18M6 18L18 6");
     path1.setAttribute("stroke-linecap", "round");
   } else {
-    // Bentuk tiga garis
     path1.setAttribute("d", "M4 7h16M4 12h16M4 17h16");
   }
 }
 
-// Klik tombol → buka/tutup menu
 hambtn.addEventListener("click", () => {
   const isOpen = mobileMenu.classList.toggle("open");
   hambtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
   setMenuIcon(isOpen);
 });
 
-// Tombol scroll otomatis ke bagian "cara"
 document.getElementById("scrollDemo").addEventListener("click", () => {
   document.getElementById("cara").scrollIntoView({ behavior: "smooth" });
 });
 
-// Ambil input jumlah risol dan elemen cart
 const inputSayur = document.getElementById("input-sayur");
 const inputMayo = document.getElementById("input-mayo");
 const cartCount = document.getElementById("cart-count");
 const cartSub = document.getElementById("cart-sub");
 const cartOrder = document.getElementById("cart-order");
 
-// Harga item
 const price = { sayur: 2000, mayo: 3000 };
 
-// Update keranjang (hitung jumlah & total harga)
+// Update cart total and item count
 function updateCart() {
   const s = Math.max(0, parseInt(inputSayur.value) || 0);
   const m = Math.max(0, parseInt(inputMayo.value) || 0);
@@ -52,18 +44,16 @@ function updateCart() {
   cartSub.innerText = `Rp${sub.toLocaleString()}`;
 }
 
-// Tombol tambah (+)
 document.querySelectorAll(".inc").forEach((btn) => {
   btn.addEventListener("click", () => {
     const key = btn.dataset.for;
     const input = document.getElementById("input-" + key);
     input.value = Math.max(0, parseInt(input.value || 0) + 1);
     updateCart();
-    animatePulse(input); // animasi kecil biar terasa hidup
+    animatePulse(input);
   });
 });
 
-// Tombol kurang (–)
 document.querySelectorAll(".dec").forEach((btn) => {
   btn.addEventListener("click", () => {
     const key = btn.dataset.for;
@@ -74,7 +64,6 @@ document.querySelectorAll(".dec").forEach((btn) => {
   });
 });
 
-// Tombol "Pesan" → kirim ke WhatsApp
 cartOrder.addEventListener("click", () => {
   const s = parseInt(inputSayur.value) || 0;
   const m = parseInt(inputMayo.value) || 0;
@@ -84,7 +73,7 @@ cartOrder.addEventListener("click", () => {
   sendWhatsapp({ sayur: s, mayo: m });
 });
 
-// Animasi input saat berubah (kecil memantul)
+// Small pulse animation for input change
 function animatePulse(el) {
   if (window.gsap) {
     gsap.fromTo(
@@ -95,7 +84,6 @@ function animatePulse(el) {
   }
 }
 
-// Animasi saat halaman selesai loading
 window.addEventListener("load", () => {
   document.querySelectorAll(".float-up").forEach((el) => el.classList.add("loaded"));
 
@@ -109,7 +97,7 @@ window.addEventListener("load", () => {
   }
 });
 
-// Menunda updateCart supaya tidak terlalu sering saat user mengetik
+// Debounce input to avoid too frequent updates
 [inputSayur, inputMayo].forEach((inp) => {
   let t;
   inp.addEventListener("input", () => {
@@ -118,13 +106,11 @@ window.addEventListener("load", () => {
   });
 });
 
-updateCart(); // jalankan pertama kali
+updateCart();
 
-// Menyalin nomor rekening ke clipboard
 function copyRekening() {
   const rekening = document.getElementById("rekening").innerText;
 
-  // Clipboard baru (aman)
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(rekening).then(() => {
       const toast = document.getElementById("toast");
@@ -132,7 +118,6 @@ function copyRekening() {
       setTimeout(() => { toast.style.opacity = "0"; }, 2000);
     });
   } else {
-    // Cara lama (backup)
     const ta = document.createElement("textarea");
     ta.value = rekening;
     ta.style.position = "fixed";
@@ -148,18 +133,16 @@ function copyRekening() {
   }
 }
 
-// Mengecek elemen mana yang melewati lebar layar (debug layout)
+// Debug: find elements overflowing viewport
 function logOverflowingElements() {
   const vw = document.documentElement.clientWidth;
   const els = [...document.querySelectorAll("*")].filter((el) => el.scrollWidth > vw + 1);
   return els;
 }
 
-// Opsi lokasi pertemuan
 const meetingOption = document.getElementById("meeting-location-option");
 const meetingInput = document.getElementById("meeting-location-input");
 
-// Tampilkan input jika pilih "Lainnya"
 meetingOption.addEventListener("change", () => {
   if (meetingOption.value === "Lainnya") {
     meetingInput.classList.remove("hidden");
@@ -169,13 +152,12 @@ meetingOption.addEventListener("change", () => {
   }
 });
 
-// Kirim pesan WA lengkap dengan data customer
+// Send WhatsApp message with order info
 function sendWhatsapp(items) {
   const phone = "6288299607239";
   const s = items.sayur || 0;
   const m = items.mayo || 0;
 
-  // Ambil data customer
   const name = document.getElementById("customer-name").value.trim();
   if (!name) return alert("Nama wajib diisi 😊");
 
@@ -183,7 +165,6 @@ function sendWhatsapp(items) {
   const date = document.getElementById("booking-date").value || "-";
   const pickup = document.getElementById("pickup-option").value;
 
-  // Lokasi meeting
   const meeting =
     meetingOption.value === "Lainnya"
       ? meetingInput.value || "-"
@@ -191,7 +172,6 @@ function sendWhatsapp(items) {
 
   const total = s * price.sayur + m * price.mayo;
 
-  // Format pesan WA
   const note = encodeURIComponent(
     `Halo Risolweb! Saya mau pesan:
 - Risol Sayur: ${s} pcs
@@ -208,7 +188,6 @@ Data Pemesan:
 Mohon konfirmasi & instruksi pembayaran. Terima kasih!`
   );
 
-  // Buka WhatsApp
   const url = `https://wa.me/${phone}?text=${note}`;
   window.open(url, "_blank");
 }
