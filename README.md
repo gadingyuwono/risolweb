@@ -1,58 +1,58 @@
-# Risolweb — Risol Modern
+# Risolweb — Modern Risol
 
-## Deskripsi Proyek
+## Project Description
 
-**Risolweb** adalah website yang menampilkan dan mempromosikan produk makanan tradisional Indonesia dengan sentuhan modern, khususnya **Risol** dalam berbagai varian. Website ini dirancang untuk memberikan informasi produk kepada calon pelanggan dengan presentasi yang menarik dan interaktif.
+**Risolweb** is a website that showcases and promotes traditional Indonesian snacks with a modern twist, specifically **Risol** in various flavors. The website is designed to provide product information to potential customers with an attractive and interactive presentation.
 
-## Tentang Risol
+## About Risol
 
-Risol adalah makanan tradisional Indonesia berbentuk seperti egg roll yang berisi isian yang menggugah selera. Risol Modern menghadirkan varian-varian inovatif sambil mempertahankan cita rasa autentik Indonesia.
+Risol is a traditional Indonesian snack shaped like an egg roll, filled with savory ingredients. Modern Risol introduces innovative variants while maintaining authentic Indonesian flavor.
 
-### Varian Produk
+### Product Variants
 
-- **Risol Sayur**: Isian kentang dan wortel yang gurih dan hangat, menawarkan kelezatan klasik dengan tekstur yang sempurna.
+- **Vegetable Risol**: Filled with seasoned potatoes and carrots, offering a classic taste with a balanced texture.
 
-## Fitur Website
+## Website Features
 
-- **Galeri Produk**: Menampilkan foto-foto produk risol yang menggugah selera
-- **Deskripsi Produk**: Informasi lengkap tentang setiap varian risol
-- **Desain Responsif**: Antarmuka yang user-friendly dan dapat diakses dari berbagai perangkat
-- **Brand Modern**: Pendekatan visual yang kontemporer untuk produk tradisional
+- **Product Gallery**: Displays appetizing photos of risol products  
+- **Product Descriptions**: Detailed information about each variant  
+- **Responsive Design**: User-friendly layout accessible on multiple devices  
+- **Modern Branding**: Contemporary visual presentation for a traditional snack  
 
-## Teknologi
+## Technology
 
-- **Platform**: GitHub Pages
-- **Bahasa**: HTML/CSS/JavaScript
-- **Struktur**: Static Website
+- **Platform**: GitHub Pages  
+- **Languages**: HTML/CSS/JavaScript  
+- **Structure**: Static Website  
 
-## Repositori
+## Repository
 
-- **GitHub**: [gadingyuwono/risolweb](https://github.com/gadingyuwono/risolweb)
-- **Live URL**: https://gadingyuwono.github.io/risolweb
+- **GitHub**: [gadingyuwono/risolweb](https://github.com/gadingyuwono/risolweb)  
+- **Live URL**: https://gadingyuwono.github.io/risolweb  
 
-## Target Audiens
+## Target Audience
 
-- Pecinta makanan tradisional Indonesia
-- Konsumen yang mencari camilan berkualitas
-- Pelanggan yang tertarik dengan produk homemade atau UMKM
-- Orang-orang yang menghargai kelezatan autentik dengan sentuhan modern
+- Fans of traditional Indonesian snacks  
+- Consumers seeking high-quality snacks  
+- Customers interested in homemade or small-business food products  
+- People who appreciate authentic flavors with a modern twist  
 
-## Cara Menggunakan
+## How to Use
 
-1. Kunjungi website: https://gadingyuwono.github.io/risolweb
-2. Jelajahi berbagai varian risol yang tersedia
-3. Baca deskripsi produk untuk mengetahui lebih lanjut tentang setiap varian
-4. Lihat galeri foto untuk melihat presentasi visual dari produk
+1. Visit the website: https://gadingyuwono.github.io/risolweb  
+2. Explore available risol variants  
+3. Read product descriptions  
+4. Check the photo gallery for visuals  
 
-## Kontribusi
+## Contribution
 
-Untuk kontribusi atau pertanyaan, silakan hubungi pemilik repository atau buat issue di GitHub.
+For contributions or questions, contact the repository owner or open an issue on GitHub.
 
-## Lisensi
+## License
 
-Proyek ini di-host di GitHub Pages. Untuk informasi lisensi lebih lanjut, lihat repository GitHub resmi.
+This project is hosted on GitHub Pages. For detailed licensing information, see the official GitHub repository.
 
-**Dibuat oleh**: Gading Yuwono  
-**Terakhir diperbarui**: 2025
+**Created by**: Gading Yuwono  
+**Last Updated**: 2025
 
 _#MadeByGading with ❤️_
