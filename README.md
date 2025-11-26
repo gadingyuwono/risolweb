@@ -41,6 +41,8 @@ Non-Indonesian users may use a translator if needed, as all product information 
 
 Muhammad Gading Yuwono Al-Satar  
 
+---
+
 _#MadeByGading with ❤️_
 
 © 2025 Risolweb — Risol Modern
